@@ -34,6 +34,8 @@ The base environment setup creates:
 
 Before running the setup, you need to update the user passwords in the script.
 
+> **⚠️ Important**: Replace the placeholder passwords with strong, unique passwords for each user
+
 **Edit `scripts/sql/snowflake_base_env_setup.sql`:**
 
 ```sql
@@ -45,10 +47,14 @@ CREATE USER USER_S3_SQL_SEARCH_APP_VIEWER PASSWORD='YourStrongViewerPassword123!
 
 ### 2. Execute the Setup Script
 
+> **⚠️ Important**: Replace placeholders with your actual Snowflake credentials:
+> - `<snowflake_account>` with your Snowflake account identifier
+> - `<your_username>` with your Snowflake username (must have ACCOUNTADMIN privileges)
+
 **Option A: Using SnowSQL**
 ```bash
 # Connect to Snowflake and run the setup script
-snowsql -a <snowflake_account> -u your_username -f scripts/sql/snowflake_base_env_setup.sql
+snowsql -a <snowflake_account> -u <your_username> -f scripts/sql/snowflake_base_env_setup.sql
 ```
 
 **Option B: Using Snowflake Web UI**

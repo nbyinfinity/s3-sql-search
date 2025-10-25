@@ -54,6 +54,11 @@ The sidebar contains all the controls to filter your search.
 -   **Use Regex:** A toggle switch to enable or disable regex-based searching.
 -   **Case Insensitive:** A toggle switch to make the search case-sensitive or case-insensitive (default is insensitive).
 
+> **💡 Search Mode Guide:**
+> - **Wildcard Mode** (Regex OFF): Use `%` for SQL LIKE patterns. Example: `sales%` matches files starting with "sales"
+> - **Regex Mode** (Regex ON): Use full regex syntax. Example: `.*sales.*\.csv$` matches CSV files containing "sales"
+> - **Note**: These are mutually exclusive - the `%` wildcard only works when regex is disabled
+
 #### 📅 Date Range
 
 -   **Enable Date Range Filter:** You must toggle this on to filter files by their last modified timestamp.

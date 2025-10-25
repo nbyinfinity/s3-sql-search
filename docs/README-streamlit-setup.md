@@ -23,7 +23,7 @@ Before setting up the Streamlit application, ensure you have completed:
 | :-------- | :--------------- | :------------------------- | :------------------------------------------------------------------------------------------------------------ |
 | Snowflake | Named Stage      | `STAGE_S3_SQL_SEARCH_APP_CODE`      | Named snowflake stage which stages streamlit app code                                                         |
 | Snowflake | Streamlit App    | `S3_SQL_SEARCH_APP` | Web application built using Streamlit and hosted within Snowflake. This app provides the user interface to query S3 files metadata. |
-| Snowflake | Snowsql Connection | `CONN_S3_SQL_SEARCH_APP_DEVELOPER` | `snowsql` connection name using developer role |
+
 ---
 
 ## Step-by-Step Instructions
@@ -31,6 +31,11 @@ Before setting up the Streamlit application, ensure you have completed:
 ### 1. Connect Snowflake using SnowSQL
 
 Run below commands using `snowsql` and from the root directory of the project
+
+> **⚠️ Important**: Replace the following placeholders in the config below:
+> - `<account_name>` with your Snowflake account identifier
+> - `<password>` with the password you set for `USER_S3_SQL_SEARCH_APP_DEVELOPER` in Step 1
+
 - Add below config in `~/.snowsql/config`
 
 ```yaml
@@ -129,6 +134,10 @@ SHOW STREAMLITS;
 ## 🎉 Setup Complete!
 
 **Congratulations!** You have successfully completed the S3 SQL Search setup. Your application is now ready to use.
+
+<img src="images/s3-sql-search-streamlitapp.png" width="900" style="border:3px solid #29B5E8; box-shadow:0 4px 12px rgba(41, 181, 232, 0.3);" />
+
+*The S3 SQL Search Streamlit application provides an intuitive interface with advanced search filters, real-time results, and secure file downloads.*
 
 ### What You've Accomplished:
 ✅ **Snowflake Base Environment** - Database, warehouse, roles, and users configured  

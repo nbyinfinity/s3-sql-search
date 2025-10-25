@@ -31,6 +31,10 @@ Before setting up the Streamlit application, ensure you have completed:
 ### 1. Verify Prerequisites
 Verify that your AWS CLI is properly configured.
 
+> **⚠️ Important**: Replace the following placeholders:
+> - `<your-profile-name>` with your AWS CLI profile name (or omit if using default profile)
+> - `<your-aws-region>` with your AWS region (e.g., `us-east-1`, `us-west-2`)
+
 ```bash
 # List available AWS profiles
 aws configure list-profiles
@@ -48,6 +52,8 @@ aws sts get-caller-identity
 ### 2. Create S3 Bucket
 
 Create the S3 bucket for data storage:
+
+> **⚠️ Important**: Replace `your-s3-bucket-name` with your actual S3 bucket name in the command below.
 
 ```bash
 # Replace 'your-s3-bucket-name' with your desired bucket name
@@ -83,6 +89,8 @@ aws iam create-role \
 #### 3.2 Attach the IAM Policy Document
 
 Attach S3 access policy to the IAM role
+
+> **⚠️ Important**: Replace `your-s3-bucket-name` with your actual S3 bucket name in both Resource ARNs below.
 
 ```bash
 aws iam put-role-policy \
@@ -124,7 +132,10 @@ aws iam put-role-policy \
 ### 4. Create Snowflake Storage Integration
 
 In Snowflake, create the storage integration to get AWS principal and External ID information
-Replace `YOUR_AWS_ACCOUNT_ID` with your AWS account ID
+
+> **⚠️ Important**: Replace the following values:
+> - `YOUR_AWS_ACCOUNT_ID` with your AWS account ID
+> - `your-s3-bucket-name` with your actual S3 bucket name
 
 ```sql
 -- Use a role with CREATE INTEGRATION privilege (e.g., ACCOUNTADMIN)
@@ -155,7 +166,10 @@ The `DESCRIBE INTEGRATION` command returns important values:
 ### 5. Update Trust Policy with Snowflake Values
 
 Take the values from step 4 and update the trust policy and update IAM role with the new trust policy.
-Replace `PASTE_STORAGE_AWS_IAM_USER_ARN_HERE` and `PASTE_STORAGE_AWS_EXTERNAL_ID_HERE` with the values from step 4
+
+> **⚠️ Important**: Replace the following values from Step 4's `DESCRIBE INTEGRATION` output:
+> - `PASTE_STORAGE_AWS_IAM_USER_ARN_HERE` with the value from **STORAGE_AWS_IAM_USER_ARN**
+> - `PASTE_STORAGE_AWS_EXTERNAL_ID_HERE` with the value from **STORAGE_AWS_EXTERNAL_ID**
 
 ```bash
 # Apply the updated trust policy

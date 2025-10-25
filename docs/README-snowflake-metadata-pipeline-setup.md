@@ -32,6 +32,8 @@ This guide details how to create the automated data pipeline in Snowflake. This 
 
 ### 1. Create External Stage with Directory Table Enabled
 
+> **⚠️ Important**: Replace `your-s3-bucket-name` with your actual S3 bucket name in the URL below.
+
 ```sql
 USE ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
 USE WAREHOUSE WH_S3_SQL_SEARCH_XS;
@@ -64,10 +66,15 @@ Note down the SQS ARN from the above command output of `DESCRIBE STAGE` of prope
 
 ### 2 Setup automated refresh of directory table
 
-Replace `AWS_SNOWFLAKE_SQS_QUEUE_ARN` with SQS ARN obtained from above step
+> **⚠️ Important**: Replace the following values:
+> - `<profile-name>` with your AWS CLI profile name
+> - `<your-aws-region>` with your AWS region (e.g., `us-east-1`, `us-west-2`)
+> - `AWS_SNOWFLAKE_SQS_QUEUE_ARN` with the SQS ARN from the previous step's `DIRECTORY_NOTIFICATION_CHANNEL` property
+> - `your-s3-bucket-name` with your actual S3 bucket name
 
 ```bash
 export AWS_PROFILE=<profile-name>
+export AWS_REGION=<your-aws-region>
 
 # Replace 'your-s3-bucket-name' with your actual bucket name
 aws s3api put-bucket-notification-configuration \
