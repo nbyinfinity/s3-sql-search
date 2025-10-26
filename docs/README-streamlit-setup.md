@@ -169,7 +169,7 @@ This setup guide references the following files from the repository:
 
 **Congratulations!** You have successfully completed the S3 SQL Search setup. Your application is now ready to use.
 
-![S3 SQL Search Streamlit Application](docs/images/s3-sql-search-streamlitapp.png)
+![S3 SQL Search Streamlit Application](./images/s3-sql-search-streamlitapp.png)
 
 *The S3 SQL Search Streamlit application provides an intuitive interface with advanced search filters, real-time results, and secure file downloads.*
 
@@ -179,7 +179,7 @@ This setup guide references the following files from the repository:
 ✅ **Metadata Pipeline** - Automated file tracking with directory tables, streams, and tasks  
 ✅ **Streamlit Application** - User-friendly web interface deployed and ready  
 
-### ⏭️ Next Actions:
+## ⏭️ Next Actions:
 - **Access the App**: Open the Streamlit application using the URL from `SHOW STREAMLITS`
 - **Start Searching**: Use the intuitive interface to search your S3 files with SQL power
 - **Share Access**: Grant `ROLE_S3_SQL_SEARCH_APP_VIEWER` to other users who need search access
