@@ -6,7 +6,6 @@ This guide details how to create the automated data pipeline in Snowflake. This 
 - [✅ Prerequisites](#-prerequisites)
 - [📦 Components Created by This Setup](#-components-created-by-this-setup)
 - [📝 Step-by-Step Setup](#-step-by-step-setup)
-- [✅ Verification](#-verification)
 - [📁 Using Configuration File Templates](#-using-configuration-file-templates)
 - [📁 Reference Files](#-reference-files)
 - [⏭️ Next Steps](#⏭️-next-steps)
