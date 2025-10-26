@@ -8,7 +8,7 @@ This guide covers setting up the snowflake storage integration for the S3 SQL Se
 - [📝 Step-by-Step Setup](#-step-by-step-setup)
 - [📁 Using Configuration File Templates](#-using-configuration-file-templates)
 - [📁 Reference Files](#-reference-files)
-- [⏭️ Next Steps](#-next-steps)
+- [📌 Next Steps](#-next-steps)
 - [📚 Additional Resources](#-additional-resources)
 
 ## ✅ Prerequisites
@@ -237,7 +237,7 @@ This setup guide references the following files from the repository:
 | [`config/iam_role_policy.json`](../config/iam_role_policy.json) | IAM policy template for S3 access permissions |
 | [`config/trust_policy.json`](../config/trust_policy.json) | Trust policy template for Snowflake to assume the IAM role |
 
-## ⏭️ Next Steps
+## 📌 Next Steps
 
 After completing the Snowflake storage integration setup, proceed to:
 
