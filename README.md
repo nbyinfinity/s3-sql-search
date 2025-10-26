@@ -15,7 +15,7 @@
 ## 📋 Table of Contents
 - [📖 Overview](#-overview)
 - [🚀 Key Features](#-key-features)
-- [🏗️ Architecture](#architecture)
+- [📐️ Architecture](#-architecture)
 - [📚 Setup Instructions](#-setup-instructions)
 - [🤝 Contributing](#-contributing)
 - [📄 License](#-license)
@@ -61,7 +61,7 @@ By leveraging Snowflake Directory Tables and event-driven processing, S3-SQL-Sea
 
 ---
 
-## 🏗️ Architecture
+## 📐 Architecture
 
 The solution is built on a modern, event-driven data architecture that is scalable and cost-effective.
 
