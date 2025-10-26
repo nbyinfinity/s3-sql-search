@@ -10,7 +10,7 @@ This guide details how to create the automated data pipeline in Snowflake. This 
 - [📁 Using Configuration File Templates](#-using-configuration-file-templates)
 - [📁 Reference Files](#-reference-files)
 - [⏭️ Next Steps](#⏭️-next-steps)
-- [📚 Additional Resources](#📚-additional-resources)
+- [📚 Additional Resources](#-additional-resources)
 
 ## ✅ Prerequisites
 
@@ -198,7 +198,7 @@ SHOW TASKS LIKE 'TASK_S3_SQL_SEARCH';
 SELECT * FROM TABLE(INFORMATION_SCHEMA.TASK_HISTORY(TASK_NAME => 'TASK_S3_SQL_SEARCH'));
 ```
 
-## ✅ 8. Verification
+### ✅ 8 Verification
 
 After a few minutes, you can verify that the pipeline is working.
 
