@@ -180,7 +180,7 @@ Build an event-driven pipeline using directory tables, streams, and tasks to aut
 
 Deploy the Streamlit web application within Snowflake to provide an intuitive search interface with advanced filtering, real-time metrics, and secure file downloads via pre-signed URLs.
 
-<img src="docs/images/s3-sql-search-streamlitapp.png" width="900" style="border:3px solid #29B5E8; box-shadow:0 4px 12px rgba(41, 181, 232, 0.3);" />
+![S3 SQL Search Streamlit Application](docs/images/s3-sql-search-streamlitapp.png)
 
 *The S3 SQL Search Streamlit application provides an intuitive interface with advanced search filters, real-time results, and secure file downloads.*
 
