@@ -1,22 +1,31 @@
-# Automated Metadata Pipeline Setup
+# ⚙️ Automated Metadata Pipeline Setup
 
 This guide details how to create the automated data pipeline in Snowflake. This pipeline captures file event data from the S3 using directory table, processes it, and loads it into a final snowflake table called `FILE_METADATA` table.
 
-## Prerequisites
+## 📋 Table of Contents
+- [✅ Prerequisites](#✅-prerequisites)
+- [📦 Components Created by This Setup](#📦-components-created-by-this-setup)
+- [📝 Step-by-Step Setup](#📝-step-by-step-setup)
+- [✅ Verification](#✅-verification)
+- [📁 Using Configuration File Templates](#📁-using-configuration-file-templates)
+- [⏭️ Next Steps](#⏭️-next-steps)
+- [📚 Additional Resources](#📚-additional-resources)
 
-### Required Setup
+## ✅ Prerequisites
+
+### 📋 Required Setup
 - ✅ **Step 1**: [Snowflake Base Environment Setup](README-snowflake-base-env-setup.md)
 - ✅ **Step 2**: [AWS Storage Integration Setup](README-snowflake-aws-storage-integration-setup.md)
 
-### Required Access
+### 🔑 Required Access
 - A Snowflake role with privileges to create stages, tables, streams, and tasks. The `ROLE_S3_SQL_SEARCH_APP_DEVELOPER` created in the base setup has the necessary permissions.
 
-### Required Tools
+### 🛠️ Required Tools
 - AWS CLI v2 installed and configured
 - SnowSQL CLI or Snowflake Web UI access
 
 
-## Components Created by This Setup
+## 📦 Components Created by This Setup
 
 | Platform  | Component Type   | Name                       | Description                                                                                                   |
 | :-------- | :--------------- | :------------------------- | :------------------------------------------------------------------------------------------------------------ |
@@ -28,9 +37,9 @@ This guide details how to create the automated data pipeline in Snowflake. This 
 
 ---
 
-## Step-by-Step Setup
+## 📝 Step-by-Step Setup
 
-### 1. Create External Stage with Directory Table Enabled
+### 1️⃣ 1. Create External Stage with Directory Table Enabled
 
 > **⚠️ Important**: Replace `your-s3-bucket-name` with your actual S3 bucket name in the URL below.
 
@@ -64,7 +73,7 @@ DESCRIBE STAGE EXT_STAGE_S3_SQL_SEARCH;
 ```
 Note down the SQS ARN from the above command output of `DESCRIBE STAGE` of property `DIRECTORY_NOTIFICATION_CHANNEL`.
 
-### 2 Setup automated refresh of directory table
+### 2️⃣ 2 Setup automated refresh of directory table
 
 > **⚠️ Important**: Replace the following values:
 > - `<profile-name>` with your AWS CLI profile name
@@ -90,7 +99,7 @@ aws s3api put-bucket-notification-configuration \
 }'
 ```
 
-### 3 Create a Stream on the Directory Table
+### 3️⃣ 3 Create a Stream on the Directory Table
 
 ```sql
 -- Create a stream on the directory table of your external stage
@@ -102,7 +111,7 @@ SELECT * FROM STREAM_S3_SQL_SEARCH;
 -- Will not return anything unless a file is uploaded into S3 after stream is created
 ```
 
-### 4 Create the Final Metadata Table
+### 4️⃣ 4 Create the Final Metadata Table
 
 This table will store the clean, searchable metadata. We use `RELATIVE_FILE_PATH` as the primary key for identifying files.
 
@@ -122,7 +131,7 @@ CREATE OR REPLACE TABLE FILE_METADATA (
 );
 ```
 
-### 5 Load **one-time** historical file metadata
+### 5️⃣ 5 Load **one-time** historical file metadata
 
 This one-time historical file metadata captures file metadata prior to creation of stream
 
@@ -139,7 +148,7 @@ SELECT
 FROM DIRECTORY(@EXT_STAGE_S3_SQL_SEARCH);
 ```
 
-### 6 Create the Processing Task
+### 6️⃣ 6 Create the Processing Task
 
 This serverless task will run every minute. It checks the stream for new records and uses a `MERGE` statement to efficiently apply the changes to the `FILE_METADATA` table.
 
@@ -173,7 +182,7 @@ WHEN NOT MATCHED AND SRC.METADATA$ACTION = 'INSERT' THEN
     VALUES (SRC.RELATIVE_PATH, SRC.FILE_NAME, SRC.SIZE, SRC.LAST_MODIFIED, SRC.ETAG, SRC.FILE_URL);
 ```
 
-### 7 Resume the Task
+### 7️⃣ 7 Resume the Task
 
 By default, tasks are created in a `suspended` state. You must resume the task to activate it.
 
@@ -188,7 +197,7 @@ SHOW TASKS LIKE 'TASK_S3_SQL_SEARCH';
 SELECT * FROM TABLE(INFORMATION_SCHEMA.TASK_HISTORY(TASK_NAME => 'TASK_S3_SQL_SEARCH'));
 ```
 
-## 8. Verification
+## ✅ 8. Verification
 
 After a few minutes, you can verify that the pipeline is working.
 
@@ -201,7 +210,7 @@ After a few minutes, you can verify that the pipeline is working.
 SELECT * FROM FILE_METADATA ORDER BY LAST_MODIFIED DESC LIMIT 10;
 ```
 
-## Using Configuration File Templates
+## 📁 Using Configuration File Templates
 
 This guide uses inline JSON for AWS CLI commands for simplicity. However, for easier management and customization, you can use the template files provided in the `config/` directory.
 
@@ -209,13 +218,13 @@ This guide uses inline JSON for AWS CLI commands for simplicity. However, for ea
 
 You can use these files with the `file://` prefix in your AWS CLI commands. For example: `aws iam put-role-policy --policy-document file://config/iam_role_policy.json`. Remember to replace the placeholder values in the files before using them.
 
-## Next Steps
+## ⏭️ Next Steps
 
 After completing the metadata pipeline setup, proceed to:
 
 **Streamlit Application Deployment**: Follow [README-streamlit-setup.md](README-streamlit-setup.md) to deploy the web interface and enable users to search and download S3 files through an intuitive UI.
 
-## Additional Resources
+## 📚 Additional Resources
 
 For more information on Snowflake concepts used in the metadata pipeline, refer to the official Snowflake documentation:
 

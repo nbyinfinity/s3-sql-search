@@ -12,16 +12,15 @@
 
 **⭐ If you find this project useful, please consider giving it a star on GitHub! ⭐**
 
-## Table of Contents
-- [Overview](#overview)
-- [Key Features](#-key-features)
-- [Architecture](#architecture)
-- [Component Naming Reference](#component-naming-reference)
-- [Setup Instructions](#setup-instructions)
-- [Contributing](#-contributing)
-- [License](#-license)
+## 📋 Table of Contents
+- [📖 Overview](#📖-overview)
+- [🚀 Key Features](#🚀-key-features)
+- [🏗️ Architecture](#🏗️-architecture)
+- [📚 Setup Instructions](#📚-setup-instructions)
+- [🤝 Contributing](#🤝-contributing)
+- [📄 License](#📄-license)
 
-## Overview
+## 📖 Overview
 
 AWS S3 provides highly durable and scalable object storage, but searching for files using complex patterns or filtering by date is challenging with its native tools. Traditional approaches often require custom scripts or resource-intensive ETL processes.
 
@@ -29,7 +28,7 @@ AWS S3 provides highly durable and scalable object storage, but searching for fi
 
 By leveraging Snowflake Directory Tables and event-driven processing, S3-SQL-Search keeps your metadata index up-to-date automatically and enables efficient, secure access to your S3 files.
 
-### 🚀 Key Features
+## 🚀 Key Features
 
 #### 🔍 **Advanced Search Capabilities**
 - **Regex Pattern Matching**: Search files using powerful regular expressions for complex naming patterns and advanced filtering
@@ -62,14 +61,14 @@ By leveraging Snowflake Directory Tables and event-driven processing, S3-SQL-Sea
 
 ---
 
-## Architecture
+## 🏗️ Architecture
 
 The solution is built on a modern, event-driven data architecture that is scalable and cost-effective.
 
 <img src="docs/images/s3-sql-search-architecture.png" width="800" style="border:1px solid #ddd; box-shadow:0 2px 8px rgba(0, 0, 0, 0.1);" />
 
 
-### Architecture Components
+### 📦 Architecture Components
 
 
 The architecture consists of seven main components:
@@ -103,7 +102,7 @@ The architecture consists of seven main components:
 
 Below is a reference table of the default names used throughout this solution's setup guides.
 
-#### Component Naming Reference
+#### 📋 Component Naming Reference
 
 | Platform        | Component Type        | Default Name                         |
 | :--------       | :-------------------- | :----------------------------------- |
@@ -132,24 +131,24 @@ Below is a reference table of the default names used throughout this solution's 
 
 ---
 
-## Setup Instructions
+## 📚 Setup Instructions
 
 Follow these setup guides in the correct order to establish the complete S3 SQL Search solution:
 
-### Prerequisites
+### ✅ Prerequisites
 
 Before beginning the setup, ensure you have:
 
-#### Required Access
+#### 🔑 Required Access
 - **AWS Account**: IAM, S3, and CLI permissions
 - **Snowflake Account**: ACCOUNTADMIN privileges or existing environment
 
-#### Required Tools
+#### 🛠️ Required Tools
 - AWS CLI v2
 - SnowSQL CLI or SnowSight (Snowflake Web UI)
 
 
-### Step 1: Snowflake Base Environment Setup
+### 1️⃣ Step 1: Snowflake Base Environment Setup
 
 **📖 [Setup Guide: README-snowflake-base-env-setup.md](docs/README-snowflake-base-env-setup.md)**
 
@@ -158,7 +157,7 @@ Create the foundational Snowflake environment including database, warehouse, rol
 > Follow **Setup Guide** to setup Snowflake base environment
 
 
-### Step 2: AWS Storage Integration Setup
+### 2️⃣ Step 2: AWS Storage Integration Setup
 
 **📖 [Setup Guide: docs/README-snowflake-aws-storage-integration-setup.md](docs/README-snowflake-aws-storage-integration-setup.md)**
 
@@ -166,7 +165,7 @@ Configure AWS IAM roles, trust policies, and Snowflake storage integration to es
 
 >Follow **Setup Guide** to setup Snowflake AWS Storage Integration
 
-### Step 3: Automated Metadata Pipeline Setup
+### 3️⃣ Step 3: Automated Metadata Pipeline Setup
 
 **📖 [Setup Guide: docs/README-snowflake-metadata-pipeline-setup.md](docs/README-snowflake-metadata-pipeline-setup.md)**
 
@@ -174,18 +173,18 @@ Build an event-driven pipeline using directory tables, streams, and tasks to aut
 
 >Follow **Setup Guide** to setup Snowflake Metadata Pipeline
 
-### Step 4: Streamlit Application Deployment
+### 4️⃣ Step 4: Streamlit Application Deployment
 
 **📖 [Setup Guide: docs/README-streamlit-setup.md](docs/README-streamlit-setup.md)**  
 **👥 [User Guide: docs/README-streamlit-user-guide.md](docs/README-streamlit-user-guide.md)**
 
 Deploy the Streamlit web application within Snowflake to provide an intuitive search interface with advanced filtering, real-time metrics, and secure file downloads via pre-signed URLs.
 
-<img src="docs/images/s3-sql-search-streamlitapp.png" width="900" style="border:1px solid #ddd; box-shadow:0 2px 8px rgba(0, 0, 0, 0.1);" />
+<img src="docs/images/s3-sql-search-streamlitapp.png" width="900" style="border:3px solid #29B5E8; box-shadow:0 4px 12px rgba(41, 181, 232, 0.3);" />
 
 *The S3 SQL Search Streamlit application provides an intuitive interface with advanced search filters, real-time results, and secure file downloads.*
 
-#### Key Features:
+#### ✨ Key Features:
 - **🔍 Advanced Search Interface**: Regex patterns, date ranges, and file size filters
 - **📊 Real-time Metrics**: File counts, total sizes, and search performance indicators  
 - **🔒 Secure Access**: Role-based authentication and time-limited pre-signed URLs for safe file downloads
@@ -230,6 +229,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ---
 
-**Made with ❤️ by the Snowflake and AWS community**
+**Powered by Snowflake ❄️ • AWS S3 ☁️ • Streamlit 🚀 | Built with ❤️ for the data community**
 
 ---

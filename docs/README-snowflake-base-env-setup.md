@@ -2,16 +2,25 @@
 
 This guide covers setting up the foundational Snowflake environment for the S3 SQL Search application, including database, warehouse, roles, and users.
 
-## Prerequisites
+## 📋 Table of Contents
+- [✅ Prerequisites](#✅-prerequisites)
+- [📦 Components created by this setup](#📦-components-created-by-this-setup)
+- [📝 Step-by-Step Setup](#📝-step-by-step-setup)
+- [📋 Script Details](#📋-script-details)
+- [⏭️ Next Steps](#⏭️-next-steps)
+- [📁 File Reference](#📁-file-reference)
+- [📚 Additional Resources](#📚-additional-resources)
 
-### Required Access
+## ✅ Prerequisites
+
+### 🔑 Required Access
 - Snowflake account with **ACCOUNTADMIN** privileges or any role which can create Database, Role, User, and Warehouse objects
 - Network access to Snowflake
 
-### Required Tools
+### 🛠️ Required Tools
 - SnowSQL CLI or Snowflake Web UI access
 
-## Components created by this setup
+## 📦 Components created by this setup
 
 The base environment setup creates:
 
@@ -28,9 +37,9 @@ The base environment setup creates:
 | Snowflake | User           | `USER_S3_SQL_SEARCH_APP_VIEWER`    | A user mapped to the viewer role for read-only data access.                       |
 
 
-## Step-by-Step Setup
+## 📝 Step-by-Step Setup
 
-### 1. Prepare the Setup Script
+### 1️⃣ 1. Prepare the Setup Script
 
 Before running the setup, you need to update the user passwords in the script.
 
@@ -45,7 +54,7 @@ CREATE USER USER_S3_SQL_SEARCH_APP_DEVELOPER PASSWORD='YourStrongDevPassword123!
 CREATE USER USER_S3_SQL_SEARCH_APP_VIEWER PASSWORD='YourStrongViewerPassword123!';
 ```
 
-### 2. Execute the Setup Script
+### 2️⃣ 2. Execute the Setup Script
 
 > **⚠️ Important**: Replace placeholders with your actual Snowflake credentials:
 > - `<snowflake_account>` with your Snowflake account identifier
@@ -63,7 +72,7 @@ snowsql -a <snowflake_account> -u <your_username> -f scripts/sql/snowflake_base_
 3. Copy and paste the contents of `scripts/sql/snowflake_base_env_setup.sql`
 4. Execute the script section by section (recommended) or all at once
 
-### 3. Verify the Setup
+### 3️⃣ 3. Verify the Setup
 
 After running the setup script, verify all components were created successfully:
 
@@ -89,7 +98,7 @@ USE DATABASE S3_SQL_SEARCH;
 SELECT CURRENT_WAREHOUSE(), CURRENT_DATABASE(), CURRENT_ROLE();
 ```
 
-### 4. Test Role Access
+### 4️⃣ 4. Test Role Access
 
 Verify that each role has appropriate permissions:
 
@@ -110,11 +119,11 @@ USE WAREHOUSE WH_S3_SQL_SEARCH_XS;
 USE DATABASE S3_SQL_SEARCH;
 ```
 
-## Script Details
+## 📋 Script Details
 
 The script automates the following setup tasks through 7 main sections:
 
-### 1. Infrastructure Setup (Section 1)
+### 1️⃣ 1. Infrastructure Setup (Section 1)
 - **Create database and warehouse**: Uses `ACCOUNTADMIN` role to create the `S3_SQL_SEARCH` database and an extra-small warehouse with auto-suspend for cost control.
   ```sql
   USE ROLE ACCOUNTADMIN;
@@ -122,7 +131,7 @@ The script automates the following setup tasks through 7 main sections:
   CREATE WAREHOUSE WH_S3_SQL_SEARCH_XS WITH WAREHOUSE_SIZE='XSMALL' AUTO_SUSPEND=60 AUTO_RESUME=TRUE;
   ```
 
-### 2. Role Creation (Section 2)
+### 2️⃣ 2. Role Creation (Section 2)
 - **Create application-specific roles**: Establishes roles for administrators, developers, and viewers.
   ```sql
   CREATE ROLE ROLE_S3_SQL_SEARCH_APP_ADMIN;
@@ -130,7 +139,7 @@ The script automates the following setup tasks through 7 main sections:
   CREATE ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER;
   ```
 
-### 3. User Creation (Section 3)
+### 3️⃣ 3. User Creation (Section 3)
 - **Create application users**: Sets up users for each role with strong password requirements.
   ```sql
   CREATE USER USER_S3_SQL_SEARCH_APP_ADMIN PASSWORD='*********' DEFAULT_ROLE=ROLE_S3_SQL_SEARCH_APP_ADMIN;
@@ -144,7 +153,7 @@ The script automates the following setup tasks through 7 main sections:
   GRANT ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER TO USER USER_S3_SQL_SEARCH_APP_VIEWER;
   ```
 
-### 4. Resource Ownership and Role Hierarchy (Section 4)
+### 4️⃣ 4. Resource Ownership and Role Hierarchy (Section 4)
 - **Grant ownership to admin role**: Transfers ownership of the database and warehouse to the application admin role.
   ```sql
   GRANT OWNERSHIP ON DATABASE S3_SQL_SEARCH TO ROLE ROLE_S3_SQL_SEARCH_APP_ADMIN;
@@ -157,7 +166,7 @@ The script automates the following setup tasks through 7 main sections:
   GRANT ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
   ```
 
-### 5. Schema Creation and Access Controls (Section 5)
+### 5️⃣ 5. Schema Creation and Access Controls (Section 5)
 - **Create application schema**: Uses ACCOUNTADMIN to create schema and grant ownership to admin role.
   ```sql
   USE ROLE ACCOUNTADMIN;
@@ -187,14 +196,14 @@ The script automates the following setup tasks through 7 main sections:
   GRANT EXECUTE TASK ON ACCOUNT TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
   ```
 
-### 6. Warehouse Access Privileges (Section 6)
+### 6️⃣ 6. Warehouse Access Privileges (Section 6)
 - **Grant warehouse usage**: Allows developer and viewer roles to use the warehouse for running queries.
   ```sql
   GRANT USAGE ON WAREHOUSE WH_S3_SQL_SEARCH_XS TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
   GRANT USAGE ON WAREHOUSE WH_S3_SQL_SEARCH_XS TO ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER;
   ```
 
-### 7. Future Object Privileges (Section 7)
+### 7️⃣ 7. Future Object Privileges (Section 7)
 - **Grant automatic privileges**: Ensures roles have appropriate access to objects created in the future.
   ```sql
   -- Viewer role gets automatic SELECT access to future tables
@@ -202,20 +211,20 @@ The script automates the following setup tasks through 7 main sections:
   GRANT SELECT ON FUTURE TABLES IN SCHEMA S3_SQL_SEARCH.APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER;
   ```
 
-## Next Steps
+## ⏭️ Next Steps
 
 After completing the base environment setup, proceed to:
 
-**Snowflake Storage Integration Setup**: Follow [README-snowflake-aws-storage-integration-setup.md](README-snowflake-aws-storage-integration-setup.md) to configure the connection between Snowflake and your S3 bucket.
+**Snowflake Storage Integration Setup**: Follow **[README-snowflake-aws-storage-integration-setup.md](README-snowflake-aws-storage-integration-setup.md)** to configure the connection between Snowflake and your S3 bucket.
 
-## File Reference
+## 📁 File Reference
 
 ```bash
 # Main Snowflake base environment setup script
 scripts/sql/snowflake_base_env_setup.sql    
 ```
 
-## Additional Resources
+## 📚 Additional Resources
 
 For more information on Snowflake concepts used in this setup, refer to the official Snowflake documentation:
 

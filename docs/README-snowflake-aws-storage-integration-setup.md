@@ -2,22 +2,30 @@
 
 This guide covers setting up the snowflake storage integration for the S3 SQL Search application which includes AWS IAM roles, trust policies, and S3 configurations.
 
-## Prerequisites
+## 📋 Table of Contents
+- [✅ Prerequisites](#✅-prerequisites)
+- [📦 Components created by this setup](#📦-components-created-by-this-setup)
+- [📝 Step-by-Step Setup](#📝-step-by-step-setup)
+- [📁 Using Configuration File Templates](#📁-using-configuration-file-templates)
+- [⏭️ Next Steps](#⏭️-next-steps)
+- [📚 Additional Resources](#📚-additional-resources)
 
-### Required Setup
+## ✅ Prerequisites
+
+### 📋 Required Setup
 Before setting up the Streamlit application, ensure you have completed:
 
 - ✅ **Step 1**: [Snowflake Base Environment Setup](README-snowflake-base-env-setup.md)
 
-### Required Access
+### 🔑 Required Access
 - AWS account with permissions to create IAM roles, policies, and S3 buckets
 - A Snowflake role with `CREATE INTEGRATION` privileges (e.g., `ACCOUNTADMIN`).
 
-### Required Tools
+### 🛠️ Required Tools
 - AWS CLI v2 installed and configured
 - SnowSQL CLI or Snowflake Web UI access
 
-## Components created by this setup
+## 📦 Components created by this setup
 
 | Platform  | Component             | Name                             | Description                                                              |
 | :-------- | :-------------------- | :------------------------------- | :----------------------------------------------------------------------- |
@@ -26,9 +34,9 @@ Before setting up the Streamlit application, ensure you have completed:
 | AWS       | IAM Policy            | `IAM_POLICY_S3_SQL_SEARCH_APP`           | Attached to the IAM role with required S3 access permissions.            |
 | Snowflake | Storage Integration   | `STORAGE_INT_S3_SQL_SEARCH`      | A Snowflake object that connects Snowflake to the S3 bucket.             |
 
-## Step-by-Step Setup
+## 📝 Step-by-Step Setup
 
-### 1. Verify Prerequisites
+### 1️⃣ 1. Verify Prerequisites
 Verify that your AWS CLI is properly configured.
 
 > **⚠️ Important**: Replace the following placeholders:
@@ -49,7 +57,7 @@ export AWS_REGION=<your-aws-region> # e.g., us-east-1
 aws sts get-caller-identity
 ```
 
-### 2. Create S3 Bucket
+### 2️⃣ 2. Create S3 Bucket
 
 Create the S3 bucket for data storage:
 
@@ -60,7 +68,7 @@ Create the S3 bucket for data storage:
 aws s3api create-bucket --bucket your-s3-bucket-name
 ```
 
-### 3. Create IAM Role and Policy
+### 3️⃣ 3. Create IAM Role and Policy
 
 Create an IAM role that Snowflake will use to access your S3 bucket:
 
@@ -129,7 +137,7 @@ aws iam put-role-policy \
 }'
 ```
 
-### 4. Create Snowflake Storage Integration
+### 4️⃣ 4. Create Snowflake Storage Integration
 
 In Snowflake, create the storage integration to get AWS principal and External ID information
 
@@ -163,7 +171,7 @@ The `DESCRIBE INTEGRATION` command returns important values:
 - **STORAGE_AWS_IAM_USER_ARN**: Snowflake's AWS user ARN (copy this value)
 - **STORAGE_AWS_EXTERNAL_ID**: External ID for secure access (copy this value)
 
-### 5. Update Trust Policy with Snowflake Values
+### 5️⃣ 5. Update Trust Policy with Snowflake Values
 
 Take the values from step 4 and update the trust policy and update IAM role with the new trust policy.
 
@@ -195,7 +203,7 @@ aws iam update-assume-role-policy \
   }'
 ```
 
-### 6. Test Storage Integration
+### 6️⃣ 6. Test Storage Integration
 
 Verify the storage integration works:
 
@@ -210,7 +218,7 @@ SHOW INTEGRATIONS LIKE 'STORAGE_INT_S3_SQL_SEARCH';
 DESCRIBE INTEGRATION STORAGE_INT_S3_SQL_SEARCH;
 ```
 
-## Using Configuration File Templates
+## 📁 Using Configuration File Templates
 
 This guide uses inline JSON for AWS CLI commands for simplicity. However, for easier management and customization, you can use the template files provided in the `config/` directory.
 
@@ -219,13 +227,13 @@ This guide uses inline JSON for AWS CLI commands for simplicity. However, for ea
 
 You can use these files with the `file://` prefix in your AWS CLI commands. For example: `aws iam put-role-policy --policy-document file://config/iam_role_policy.json`. Remember to replace the placeholder values in the files before using them.
 
-## Next Steps
+## ⏭️ Next Steps
 
 After completing the Snowflake storage integration setup, proceed to:
 
 **Metadata Pipeline Setup**: Follow [README-snowflake-metadata-pipeline-setup.md](README-snowflake-metadata-pipeline-setup.md) to set up the automated metadata processing pipeline with directory tables, streams, and tasks.
 
-## Additional Resources
+## 📚 Additional Resources
 
 For more information on Snowflake and AWS integration setup used in this setup, refer to the official documentation:
 

@@ -2,22 +2,28 @@
 
 This guide covers the setup and deployment of the S3 SQL Search Streamlit web application.
 
-## Prerequisites
+## 📋 Table of Contents
+- [✅ Prerequisites](#✅-prerequisites)
+- [📦 Components Created by This Setup](#📦-components-created-by-this-setup)
+- [📝 Step-by-Step Instructions](#📝-step-by-step-instructions)
+- [🎉 Setup Complete!](#🎉-setup-complete)
 
-### Required Setup
+## ✅ Prerequisites
+
+### 📋 Required Setup
 Before setting up the Streamlit application, ensure you have completed:
 
 - ✅ **Step 1**: [Snowflake Base Environment Setup](README-snowflake-base-env-setup.md)
 - ✅ **Step 2**: [AWS Storage Integration Setup](README-snowflake-aws-storage-integration-setup.md)
 - ✅ **Step 3**: [Metadata Pipeline Setup](README-snowflake-metadata-pipeline-setup.md)
 
-### Required Access
+### 🔑 Required Access
 - A Snowflake role with privileges to create stage and streamlit privileges. The `ROLE_S3_SQL_SEARCH_APP_DEVELOPER` created in the base setup has the necessary permissions.
 
-### Required Tools
+### 🛠️ Required Tools
 - SnowSQL CLI access
 
-## Components Created by This Setup
+## 📦 Components Created by This Setup
 
 | Platform  | Component Type   | Name                       | Description                                                                                                   |
 | :-------- | :--------------- | :------------------------- | :------------------------------------------------------------------------------------------------------------ |
@@ -26,9 +32,9 @@ Before setting up the Streamlit application, ensure you have completed:
 
 ---
 
-## Step-by-Step Instructions
+## 📝 Step-by-Step Instructions
 
-### 1. Connect Snowflake using SnowSQL
+### 1️⃣ 1. Connect Snowflake using SnowSQL
 
 Run below commands using `snowsql` and from the root directory of the project
 
@@ -54,7 +60,7 @@ role = "ROLE_S3_SQL_SEARCH_APP_DEVELOPER"
 snowsql -c CONN_S3_SQL_SEARCH_APP_DEVELOPER
 ```
 
-### 2. Create Stage for Streamlit App
+### 2️⃣ 2. Create Stage for Streamlit App
 
 ```sql
 USE ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
@@ -66,7 +72,7 @@ USE SCHEMA APP_DATA;
 CREATE OR REPLACE STAGE STAGE_S3_SQL_SEARCH_APP_CODE;
 ```
 
-### 3.Upload Application Files to the Stage
+### 3️⃣ 3.Upload Application Files to the Stage
 
 **Note:** The following `PUT` commands should be executed from the root directory of this project using `snowsql`. This ensures the relative file paths (`app/...`) are resolved correctly.
 
@@ -80,7 +86,7 @@ PUT file://docs/images/s3-sql-search-logo.jpg @STAGE_S3_SQL_SEARCH_APP_CODE/docs
 LIST @STAGE_S3_SQL_SEARCH_APP_CODE;
 ```
 
-### 4. Create the Streamlit Application
+### 4️⃣ 4. Create the Streamlit Application
 
 ```sql
 -- Create the Streamlit application
@@ -96,21 +102,39 @@ COMMENT = 'S3 SQL Search App'
 GRANT USAGE ON STREAMLIT S3_SQL_SEARCH_APP TO ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER;
 ```
 
-#### 5. Verify the Streamlit Application
+### 5️⃣ 5. Verify and Access the Streamlit Application
 
 ```sql
--- Get the application URL
-SHOW STREAMLITS;
--- Look for S3_SQL_SEARCH_APP and note the URL
+-- Verify the application was created successfully
+SHOW STREAMLITS LIKE 'S3_SQL_SEARCH_APP';
+-- S3_SQL_SEARCH_APP should be listed in the output
 ```
 
-#### 6. Access and Test the Application
+**Access the Application:**
 
-**A. Access the Application:**
+There are two ways to access your Streamlit app:
 
-1. From the `SHOW STREAMLITS` output, copy the URL for `S3_SQL_SEARCH_APP`
-2. Open the URL in your web browser
-3. Sign in with a Snowflake user that has `ROLE_S3_SQL_SEARCH_APP_VIEWER` role or higher
+**Option 1: Through Snowsight UI (Recommended)**
+1. Log into your Snowflake account via **[Snowsight](https://app.snowflake.com)**
+2. Select role `ROLE_S3_SQL_SEARCH_APP_VIEWER` or higher in the left sidebar
+3. Navigate to **Projects** → **Streamlit** in the left sidebar
+4. Find and click on **S3_SQL_SEARCH_APP**
+5. The application will open in a new tab
+
+**Option 2: Direct URL**
+
+The Streamlit app URL follows this format:
+```
+-- SELECT CURRENT_ACCOUNT(); # Provides account locator
+-- SELECT CURRENT_REGION(); # Provides region
+https://app.snowflake.com/<region>/<account_locator>/#/streamlit-apps/S3_SQL_SEARCH.APP_DATA.S3_SQL_SEARCH_APP
+```
+
+### 6️⃣ 6. Test the Application
+
+**A. Sign In:**
+- Open the Streamlit app using one of the methods above
+- Sign in with a Snowflake user that has `ROLE_S3_SQL_SEARCH_APP_VIEWER` role or higher
 
 **B. Test Basic Functionality:**
 
@@ -139,13 +163,13 @@ SHOW STREAMLITS;
 
 *The S3 SQL Search Streamlit application provides an intuitive interface with advanced search filters, real-time results, and secure file downloads.*
 
-### What You've Accomplished:
+### ✅ What You've Accomplished:
 ✅ **Snowflake Base Environment** - Database, warehouse, roles, and users configured  
 ✅ **AWS Storage Integration** - Snowflake connected to your S3 bucket  
 ✅ **Metadata Pipeline** - Automated file tracking with directory tables, streams, and tasks  
 ✅ **Streamlit Application** - User-friendly web interface deployed and ready  
 
-### Next Actions:
+### ⏭️ Next Actions:
 - **Access the App**: Open the Streamlit application using the URL from `SHOW STREAMLITS`
 - **Start Searching**: Use the intuitive interface to search your S3 files with SQL power
 - **Share Access**: Grant `ROLE_S3_SQL_SEARCH_APP_VIEWER` to other users who need search access

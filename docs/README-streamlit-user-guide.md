@@ -1,12 +1,18 @@
-# S3 SQL Search Streamlit Application - User Guide
+# 📖 S3 SQL Search Streamlit Application - User Guide
 
 This guide provides instructions on how to use the **S3 SQL Search** Streamlit application. This tool allows you to search for files stored in S3 based on their metadata, view the results, and generate download links.
 
-## Overview
+## 📋 Table of Contents
+- [🎯 Overview](#🎯-overview)
+- [🚀 How to Use](#🚀-how-to-use)
+- [💡 Example Usage](#💡-example-usage)
+- [✨ Features](#✨-features)
+
+## 🎯 Overview
 
 The S3 SQL Search app provides a user-friendly interface to query file metadata stored in a Snowflake database. You can search for files using various filters, view summary metrics of your search, and generate pre-signed URLs to download the files directly.
 
-## How to Use
+## 🚀 How to Use
 
 The application is divided into a sidebar for search controls and a main panel for displaying results.
 
@@ -16,7 +22,7 @@ The application is divided into a sidebar for search controls and a main panel f
 4.  **Review Results:** The main panel will update with summary metrics and a detailed table of the files that match your criteria.
 5.  **Download Files:** In the results table, select the checkboxes next to the files you wish to download. A **Download Center** will appear at the bottom, generating secure, temporary download links for the selected files.
 
-## Example Usage
+## 💡 Example Usage
 
 Let's say you want to find all CSV files containing the word "transaction" that were uploaded in the last month and are larger than 1 KB.
 
@@ -40,9 +46,9 @@ Let's say you want to find all CSV files containing the word "transaction" that 
 
 The main panel will now show all the files matching these criteria. You can see the total number of files and their combined size in the metrics summary. To download a specific file, check the box next to it, and a download link will be generated for you in the **Download Center**.
 
-## Features
+## ✨ Features
 
-### 1. Search Parameters (Sidebar)
+### 1️⃣ 1. Search Parameters (Sidebar)
 
 The sidebar contains all the controls to filter your search.
 
@@ -70,15 +76,15 @@ The sidebar contains all the controls to filter your search.
 -   **Size Unit:** Select the unit for the size input: `Bytes`, `KB`, `MB`, or `GB`.
 -   **Minimum Size & Maximum Size:** Specify the desired file size range.
 
-### 2. Active Filters Summary
+### 2️⃣ 2. Active Filters Summary
 
 This section, located in the sidebar, provides a summary of all the filters that are currently active for your search. It helps you keep track of the criteria being used.
 
-### 3. Search Results (Main Panel)
+### 3️⃣ 3. Search Results (Main Panel)
 
 After a search is performed, the main panel displays the results.
 
-#### Summary Metrics
+#### 📊 Summary Metrics
 
 At the top of the results, you will find four key metrics:
 -   **Total Files Found:** The total number of files that matched your search criteria.
@@ -86,7 +92,7 @@ At the top of the results, you will find four key metrics:
 -   **🕧 Recent File:** The date of the most recently modified file in the results.
 -   **🕛 Oldest File:** The date of the oldest file in the results.
 
-#### Results Table
+#### 📋 Results Table
 
 A detailed table displays the list of files found, with the following columns:
 -   **Select:** A checkbox to select a file for download.
@@ -95,7 +101,7 @@ A detailed table displays the list of files found, with the following columns:
 -   **🕘 File Timestamp:** The date and time the file was last modified.
 -   **📁 Relative Path:** The file's path within the S3 bucket.
 
-### 4. Download Center
+### 4️⃣ 4. Download Center
 
 When you select one or more files using the checkboxes in the results table, the **Download Center** appears below the results.
 
