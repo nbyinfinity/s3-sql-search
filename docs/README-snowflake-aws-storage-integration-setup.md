@@ -3,7 +3,7 @@
 This guide covers setting up the snowflake storage integration for the S3 SQL Search application which includes AWS IAM roles, trust policies, and S3 configurations.
 
 ## 📋 Table of Contents
-- [✅ Prerequisites](#✅-prerequisites)
+- [✅ Prerequisites](#-prerequisites)
 - [📦 Components created by this setup](#📦-components-created-by-this-setup)
 - [📝 Step-by-Step Setup](#📝-step-by-step-setup)
 - [📁 Using Configuration File Templates](#📁-using-configuration-file-templates)
