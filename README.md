@@ -1,4 +1,4 @@
-# <img src="docs/images/s3-sql-search-logo.jpg" alt="S3 SQL Search" width="50" style="vertical-align: middle;" /> S3-SQL-Search: Lightning-Fast, Regex-Powered File Search for AWS S3
+# <img src="docs/images/s3-sql-search-logo.jpg" alt="S3 SQL Search" width="60" style="vertical-align: middle;" /> S3-SQL-Search: Lightning-Fast, Regex-Powered File Search for AWS S3
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
@@ -30,27 +30,27 @@ By leveraging Snowflake Directory Tables and event-driven processing, S3-SQL-Sea
 
 ## 🚀 Key Features
 
-#### 🔍 **Advanced Search Capabilities**
+### 🔍 **Advanced Search Capabilities**
 - **Regex Pattern Matching**: Search files using powerful regular expressions for complex naming patterns and advanced filtering
 - **SQL LIKE Wildcards**: Use familiar `%` wildcards for simple, fast pattern matching
 - **Timestamp-Based Filtering**: Filter files by creation date, modification date, or custom date ranges
 - **Multi-Criteria Filtering**: Combine filename patterns, dates, and file sizes in single queries
 
-#### ⚡ **Performance & Scalability**
+### ⚡ **Performance & Scalability**
 - **Lightning-Fast Queries**: Sub-second search results even across millions of files
 - **Query Result Caching**: Snowflake automatically caches results for repeated searches, delivering instant responses when the underlying data hasn't changed
 - **Auto-Scaling Architecture**: Handles growing S3 data volumes without performance degradation
 - **Event-Driven Updates**: Real-time metadata updates within minutes of S3 changes
 - **Cost-Optimized**: Dramatically lowers costs for frequent, complex, and concurrent user searches by replacing expensive S3 `List` API calls with efficient queries on indexed metadata.
 
-#### 🔒 **Security & Reliability**
+### 🔒 **Security & Reliability**
 - **Role-Based Access Control (RBAC)**: Application access is managed through Snowflake roles, ensuring only authorized users can use the search interface
 - **File-Level Access Control**: Restrict which users can view or download specific files using row-level security policies *(Not implemented - can be added based on requirements)*
 - **Pre-Signed URLs**: Secure file downloads without exposing AWS credentials
 - **Audit Trail**: Complete logging of all file searches and user activities via Snowflake query history
 - **Enterprise-Grade**: Built on Snowflake and AWS for maximum reliability
 
-#### 💻 **User Experience**
+### 💻 **User Experience**
 - **Intuitive Web Interface**: Easy-to-use Streamlit application with professional design and emoji-enhanced UI
 - **Interactive Results**: Real-time search with advanced filters and sortable result tables
 - **Real-Time Metrics Dashboard**: Instant visibility into total files found, combined size, and date ranges
@@ -102,7 +102,7 @@ The architecture consists of seven main components:
 
 Below is a reference table of the default names used throughout this solution's setup guides.
 
-#### 📋 Component Naming Reference
+### 📋 Component Naming Reference
 
 | Platform        | Component Type        | Default Name                         |
 | :--------       | :-------------------- | :----------------------------------- |
