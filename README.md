@@ -13,12 +13,12 @@
 **⭐ If you find this project useful, please consider giving it a star on GitHub! ⭐**
 
 ## 📋 Table of Contents
-- [📖 Overview](#📖-overview)
-- [🚀 Key Features](#🚀-key-features)
-- [🏗️ Architecture](#🏗️-architecture)
-- [📚 Setup Instructions](#📚-setup-instructions)
-- [🤝 Contributing](#🤝-contributing)
-- [📄 License](#📄-license)
+- [📖 Overview](#-overview)
+- [🚀 Key Features](#-key-features)
+- [🏗️ Architecture](#-architecture)
+- [📚 Setup Instructions](#-setup-instructions)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
 
 ## 📖 Overview
 
