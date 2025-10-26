@@ -8,7 +8,7 @@ This guide covers setting up the snowflake storage integration for the S3 SQL Se
 - [📝 Step-by-Step Setup](#-step-by-step-setup)
 - [📁 Using Configuration File Templates](#-using-configuration-file-templates)
 - [📁 Reference Files](#-reference-files)
-- [⏭️ Next Steps](#next-steps)
+- [⏭️ Next Steps](#-next-steps)
 - [📚 Additional Resources](#-additional-resources)
 
 ## ✅ Prerequisites
