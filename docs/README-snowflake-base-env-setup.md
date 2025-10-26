@@ -8,7 +8,7 @@ This guide covers setting up the foundational Snowflake environment for the S3 S
 - [📝 Step-by-Step Setup](#-step-by-step-setup)
 - [📋 Script Details](#-script-details)
 - [📁 Reference Files](#-reference-files)
-- [⏭️ Next Steps](#-next-steps)
+- [📌 Next Steps](#-next-steps)
 - [📚 Additional Resources](#-additional-resources)
 
 ## ✅ Prerequisites
@@ -220,7 +220,7 @@ This setup guide references the following files from the repository:
 | [`scripts/sql/snowflake_base_env_setup.sql`](../scripts/sql/snowflake_base_env_setup.sql) | Main Snowflake base environment setup script that creates database, warehouse, roles, users, and schemas |
 | [`scripts/sql/snowflake_teardown.sql`](../scripts/sql/snowflake_teardown.sql) | Script to teardown/cleanup the Snowflake environment |
 
-## ⏭️ Next Steps
+## 📌 Next Steps
 
 After completing the base environment setup, proceed to:
 
