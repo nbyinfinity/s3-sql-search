@@ -3,13 +3,13 @@
 This guide details how to create the automated data pipeline in Snowflake. This pipeline captures file event data from the S3 using directory table, processes it, and loads it into a final snowflake table called `FILE_METADATA` table.
 
 ## 📋 Table of Contents
-- [✅ Prerequisites](#✅-prerequisites)
-- [📦 Components Created by This Setup](#📦-components-created-by-this-setup)
-- [📝 Step-by-Step Setup](#📝-step-by-step-setup)
-- [✅ Verification](#✅-verification)
-- [📁 Using Configuration File Templates](#📁-using-configuration-file-templates)
-- [⏭️ Next Steps](#⏭️-next-steps)
-- [📚 Additional Resources](#📚-additional-resources)
+- [✅ Prerequisites](#-prerequisites)
+- [📦 Components Created by This Setup](#-components-created-by-this-setup)
+- [📝 Step-by-Step Setup](#-step-by-step-setup)
+- [📁 Using Configuration File Templates](#-using-configuration-file-templates)
+- [📁 Reference Files](#-reference-files)
+- [📌 Next Steps](#-next-steps)
+- [📚 Additional Resources](#-additional-resources)
 
 ## ✅ Prerequisites
 
@@ -197,7 +197,7 @@ SHOW TASKS LIKE 'TASK_S3_SQL_SEARCH';
 SELECT * FROM TABLE(INFORMATION_SCHEMA.TASK_HISTORY(TASK_NAME => 'TASK_S3_SQL_SEARCH'));
 ```
 
-## ✅ 8. Verification
+### ✅ 8 Verification
 
 After a few minutes, you can verify that the pipeline is working.
 
@@ -218,7 +218,15 @@ This guide uses inline JSON for AWS CLI commands for simplicity. However, for ea
 
 You can use these files with the `file://` prefix in your AWS CLI commands. For example: `aws iam put-role-policy --policy-document file://config/iam_role_policy.json`. Remember to replace the placeholder values in the files before using them.
 
-## ⏭️ Next Steps
+## 📁 Reference Files
+
+This setup guide references the following files from the repository:
+
+| File Path | Description |
+|-----------|-------------|
+| [`config/event_notification.json`](../config/event_notification.json) | S3 event notification configuration template for automated metadata refresh |
+
+## 📌 Next Steps
 
 After completing the metadata pipeline setup, proceed to:
 

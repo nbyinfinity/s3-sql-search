@@ -3,12 +3,13 @@
 This guide covers setting up the snowflake storage integration for the S3 SQL Search application which includes AWS IAM roles, trust policies, and S3 configurations.
 
 ## 📋 Table of Contents
-- [✅ Prerequisites](#✅-prerequisites)
-- [📦 Components created by this setup](#📦-components-created-by-this-setup)
-- [📝 Step-by-Step Setup](#📝-step-by-step-setup)
-- [📁 Using Configuration File Templates](#📁-using-configuration-file-templates)
-- [⏭️ Next Steps](#⏭️-next-steps)
-- [📚 Additional Resources](#📚-additional-resources)
+- [✅ Prerequisites](#-prerequisites)
+- [📦 Components created by this setup](#-components-created-by-this-setup)
+- [📝 Step-by-Step Setup](#-step-by-step-setup)
+- [📁 Using Configuration File Templates](#-using-configuration-file-templates)
+- [📁 Reference Files](#-reference-files)
+- [📌 Next Steps](#-next-steps)
+- [📚 Additional Resources](#-additional-resources)
 
 ## ✅ Prerequisites
 
@@ -227,11 +228,20 @@ This guide uses inline JSON for AWS CLI commands for simplicity. However, for ea
 
 You can use these files with the `file://` prefix in your AWS CLI commands. For example: `aws iam put-role-policy --policy-document file://config/iam_role_policy.json`. Remember to replace the placeholder values in the files before using them.
 
-## ⏭️ Next Steps
+## 📁 Reference Files
+
+This setup guide references the following files from the repository:
+
+| File Path | Description |
+|-----------|-------------|
+| [`config/iam_role_policy.json`](../config/iam_role_policy.json) | IAM policy template for S3 access permissions |
+| [`config/trust_policy.json`](../config/trust_policy.json) | Trust policy template for Snowflake to assume the IAM role |
+
+## 📌 Next Steps
 
 After completing the Snowflake storage integration setup, proceed to:
 
-**Metadata Pipeline Setup**: Follow [README-snowflake-metadata-pipeline-setup.md](README-snowflake-metadata-pipeline-setup.md) to set up the automated metadata processing pipeline with directory tables, streams, and tasks.
+**Metadata Pipeline Setup**: Follow **[README-snowflake-metadata-pipeline-setup.md](README-snowflake-metadata-pipeline-setup.md)** to set up the automated metadata processing pipeline with directory tables, streams, and tasks.
 
 ## 📚 Additional Resources
 
