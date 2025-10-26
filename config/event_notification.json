@@ -1,0 +1,9 @@
+{
+    "QueueConfigurations": [
+        {
+            "Id": "EVENT_NOTIFICATION_S3_SQL_SEARCH_APP",
+            "QueueArn": "AWS_SNOWFLAKE_SQS_QUEUE_ARN",
+            "Events": ["s3:ObjectCreated:*", "s3:ObjectRemoved:*"]
+        }
+    ]
+}
