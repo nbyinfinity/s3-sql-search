@@ -3,10 +3,10 @@
 This guide provides instructions on how to use the **S3 SQL Search** Streamlit application. This tool allows you to search for files stored in S3 based on their metadata, view the results, and generate download links.
 
 ## 📋 Table of Contents
-- [🎯 Overview](#🎯-overview)
-- [🚀 How to Use](#🚀-how-to-use)
-- [💡 Example Usage](#💡-example-usage)
-- [✨ Features](#✨-features)
+- [🎯 Overview](#-overview)
+- [🚀 How to Use](#-how-to-use)
+- [💡 Example Usage](#-example-usage)
+- [✨ Features](#-features)
 
 ## 🎯 Overview
 

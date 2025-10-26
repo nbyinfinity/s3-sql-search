@@ -3,12 +3,12 @@
 This guide covers setting up the foundational Snowflake environment for the S3 SQL Search application, including database, warehouse, roles, and users.
 
 ## 📋 Table of Contents
-- [✅ Prerequisites](#✅-prerequisites)
-- [📦 Components created by this setup](#📦-components-created-by-this-setup)
-- [📝 Step-by-Step Setup](#📝-step-by-step-setup)
-- [📋 Script Details](#📋-script-details)
-- [📁 Reference Files](#📁-reference-files)
-- [⏭️ Next Steps](#⏭️-next-steps)
+- [✅ Prerequisites](#-prerequisites)
+- [📦 Components created by this setup](#-components-created-by-this-setup)
+- [📝 Step-by-Step Setup](#-step-by-step-setup)
+- [📋 Script Details](#-script-details)
+- [📁 Reference Files](#-reference-files)
+- [⏭️ Next Steps](#-next-steps)
 - [📚 Additional Resources](#📚-additional-resources)
 
 ## ✅ Prerequisites

@@ -3,12 +3,11 @@
 This guide covers the setup and deployment of the S3 SQL Search Streamlit web application.
 
 ## 📋 Table of Contents
-- [✅ Prerequisites](#✅-prerequisites)
-- [📦 Components Created by This Setup](#📦-components-created-by-this-setup)
-- [📝 Step-by-Step Instructions](#📝-step-by-step-instructions)
-- [📁 Reference Files](#📁-reference-files)
-- [🎉 Setup Complete!](#🎉-setup-complete)
-
+- [✅ Prerequisites](#-prerequisites)
+- [📦 Components Created by This Setup](#-components-created-by-this-setup)
+- [📝 Step-by-Step Instructions](#-step-by-step-instructions)
+- [📁 Reference Files](#-reference-files)
+- [🎉 Setup Complete!](#-setup-complete)
 ## ✅ Prerequisites
 
 ### 📋 Required Setup

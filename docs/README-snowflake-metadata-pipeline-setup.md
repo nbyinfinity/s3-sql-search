@@ -3,12 +3,12 @@
 This guide details how to create the automated data pipeline in Snowflake. This pipeline captures file event data from the S3 using directory table, processes it, and loads it into a final snowflake table called `FILE_METADATA` table.
 
 ## 📋 Table of Contents
-- [✅ Prerequisites](#✅-prerequisites)
-- [📦 Components Created by This Setup](#📦-components-created-by-this-setup)
-- [📝 Step-by-Step Setup](#📝-step-by-step-setup)
-- [✅ Verification](#✅-verification)
-- [📁 Using Configuration File Templates](#📁-using-configuration-file-templates)
-- [📁 Reference Files](#📁-reference-files)
+- [✅ Prerequisites](#-prerequisites)
+- [📦 Components Created by This Setup](#-components-created-by-this-setup)
+- [📝 Step-by-Step Setup](#-step-by-step-setup)
+- [✅ Verification](#-verification)
+- [📁 Using Configuration File Templates](#-using-configuration-file-templates)
+- [📁 Reference Files](#-reference-files)
 - [⏭️ Next Steps](#⏭️-next-steps)
 - [📚 Additional Resources](#📚-additional-resources)
 
