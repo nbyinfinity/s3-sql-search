@@ -8,7 +8,7 @@ This guide details how to create the automated data pipeline in Snowflake. This 
 - [📝 Step-by-Step Setup](#-step-by-step-setup)
 - [📁 Using Configuration File Templates](#-using-configuration-file-templates)
 - [📁 Reference Files](#-reference-files)
-- [⏭️ Next Steps](#⏭️-next-steps)
+- [📌 Next Steps](#-next-steps)
 - [📚 Additional Resources](#-additional-resources)
 
 ## ✅ Prerequisites
@@ -226,7 +226,7 @@ This setup guide references the following files from the repository:
 |-----------|-------------|
 | [`config/event_notification.json`](../config/event_notification.json) | S3 event notification configuration template for automated metadata refresh |
 
-## ⏭️ Next Steps
+## 📌 Next Steps
 
 After completing the metadata pipeline setup, proceed to:
 
