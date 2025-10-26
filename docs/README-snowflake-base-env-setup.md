@@ -7,8 +7,8 @@ This guide covers setting up the foundational Snowflake environment for the S3 S
 - [📦 Components created by this setup](#📦-components-created-by-this-setup)
 - [📝 Step-by-Step Setup](#📝-step-by-step-setup)
 - [📋 Script Details](#📋-script-details)
+- [📁 Reference Files](#📁-reference-files)
 - [⏭️ Next Steps](#⏭️-next-steps)
-- [📁 File Reference](#📁-file-reference)
 - [📚 Additional Resources](#📚-additional-resources)
 
 ## ✅ Prerequisites
@@ -211,18 +211,20 @@ The script automates the following setup tasks through 7 main sections:
   GRANT SELECT ON FUTURE TABLES IN SCHEMA S3_SQL_SEARCH.APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER;
   ```
 
+## 📁 Reference Files
+
+This setup guide references the following files from the repository:
+
+| File Path | Description |
+|-----------|-------------|
+| [`scripts/sql/snowflake_base_env_setup.sql`](../scripts/sql/snowflake_base_env_setup.sql) | Main Snowflake base environment setup script that creates database, warehouse, roles, users, and schemas |
+| [`scripts/sql/snowflake_teardown.sql`](../scripts/sql/snowflake_teardown.sql) | Script to teardown/cleanup the Snowflake environment |
+
 ## ⏭️ Next Steps
 
 After completing the base environment setup, proceed to:
 
 **Snowflake Storage Integration Setup**: Follow **[README-snowflake-aws-storage-integration-setup.md](README-snowflake-aws-storage-integration-setup.md)** to configure the connection between Snowflake and your S3 bucket.
-
-## 📁 File Reference
-
-```bash
-# Main Snowflake base environment setup script
-scripts/sql/snowflake_base_env_setup.sql    
-```
 
 ## 📚 Additional Resources
 

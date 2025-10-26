@@ -6,6 +6,7 @@ This guide covers the setup and deployment of the S3 SQL Search Streamlit web ap
 - [✅ Prerequisites](#✅-prerequisites)
 - [📦 Components Created by This Setup](#📦-components-created-by-this-setup)
 - [📝 Step-by-Step Instructions](#📝-step-by-step-instructions)
+- [📁 Reference Files](#📁-reference-files)
 - [🎉 Setup Complete!](#🎉-setup-complete)
 
 ## ✅ Prerequisites
@@ -153,13 +154,23 @@ https://app.snowflake.com/<region>/<account_locator>/#/streamlit-apps/S3_SQL_SEA
     - Click a download link to verify pre-signed URL generation works
     - file should download successfully
 
+## 📁 Reference Files
+
+This setup guide references the following files from the repository:
+
+| File Path | Description |
+|-----------|-------------|
+| [`app/s3_sql_search_app.py`](../app/s3_sql_search_app.py) | Main Streamlit application script |
+| [`app/environment.yml`](../app/environment.yml) | Application environment configuration for the Streamlit app |
+| [`docs/images/s3-sql-search-logo.jpg`](images/s3-sql-search-logo.jpg) | Logo image used in the Streamlit application |
+
 ---
 
 ## 🎉 Setup Complete!
 
 **Congratulations!** You have successfully completed the S3 SQL Search setup. Your application is now ready to use.
 
-<img src="images/s3-sql-search-streamlitapp.png" width="900" style="border:3px solid #29B5E8; box-shadow:0 4px 12px rgba(41, 181, 232, 0.3);" />
+![S3 SQL Search Streamlit Application](docs/images/s3-sql-search-streamlitapp.png)
 
 *The S3 SQL Search Streamlit application provides an intuitive interface with advanced search filters, real-time results, and secure file downloads.*
 
