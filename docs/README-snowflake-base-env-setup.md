@@ -9,7 +9,7 @@ This guide covers setting up the foundational Snowflake environment for the S3 S
 - [📋 Script Details](#-script-details)
 - [📁 Reference Files](#-reference-files)
 - [⏭️ Next Steps](#-next-steps)
-- [📚 Additional Resources](#📚-additional-resources)
+- [📚 Additional Resources](#-additional-resources)
 
 ## ✅ Prerequisites
 
