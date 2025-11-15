@@ -204,21 +204,6 @@ aws iam update-assume-role-policy \
   }'
 ```
 
-### 6️⃣ 6. Test Storage Integration
-
-Verify the storage integration works:
-
-```sql
--- Switch to ADMIN Role
-USE ROLE ROLE_S3_SQL_SEARCH_APP_ADMIN;
-
--- Test the storage integration
-SHOW INTEGRATIONS LIKE 'STORAGE_INT_S3_SQL_SEARCH';
-
--- Verify integration
-DESCRIBE INTEGRATION STORAGE_INT_S3_SQL_SEARCH;
-```
-
 ## 📁 Using Configuration File Templates
 
 This guide uses inline JSON for AWS CLI commands for simplicity. However, for easier management and customization, you can use the template files provided in the `config/` directory.

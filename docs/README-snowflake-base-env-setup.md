@@ -15,7 +15,6 @@ This guide covers setting up the foundational Snowflake environment for the S3 S
 
 ### 🔑 Required Access
 - Snowflake account with **ACCOUNTADMIN** privileges or any role which can create Database, Role, User, and Warehouse objects
-- Network access to Snowflake
 
 ### 🛠️ Required Tools
 - SnowSQL CLI or Snowflake Web UI access
@@ -24,17 +23,22 @@ This guide covers setting up the foundational Snowflake environment for the S3 S
 
 The base environment setup creates:
 
-| Platform  | Component Type | Name                               | Description                                                                       |
-| :-------- | :------------- | :--------------------------------- | :-------------------------------------------------------------------------------- |
-| Snowflake | Database       | `S3_SQL_SEARCH`                    | A dedicated database for application objects.                                 |
+| Platform  | Component Type | Name                                | Description                                                                       |
+| :-------- | :------------- | :---------------------------------- | :-------------------------------------------------------------------------------- |
+| Snowflake | Database       | `S3_SQL_SEARCH`                     | A dedicated database for application objects.                                     |
 | Snowflake | Schema         | `APP_DATA`                          | A dedicated schema within the S3_SQL_SEARCH database for organizing all application objects including tables, stages, streams, tasks, and Streamlit applications. |
-| Snowflake | Warehouse      | `WH_S3_SQL_SEARCH_XS`              | An extra-small warehouse with a 60-second auto-suspend policy for cost efficiency.|
-| Snowflake | Role           | `ROLE_S3_SQL_SEARCH_APP_ADMIN`     | Full administrative access to all application components.                         |
-| Snowflake | Role           | `ROLE_S3_SQL_SEARCH_APP_DEVELOPER` | Development access to create and manage application objects.                      |
-| Snowflake | Role           | `ROLE_S3_SQL_SEARCH_APP_VIEWER`    | Read-only access for querying data and viewing objects. This role is required for users to interact with the Streamlit app. |
-| Snowflake | User           | `USER_S3_SQL_SEARCH_APP_ADMIN`     | A user mapped to the admin role for full system management.                       |
-| Snowflake | User           | `USER_S3_SQL_SEARCH_APP_DEVELOPER` | A user mapped to the developer role for application development.                  |
-| Snowflake | User           | `USER_S3_SQL_SEARCH_APP_VIEWER`    | A user mapped to the viewer role for read-only data access.                       |
+| Snowflake | Schema         | `APP_DATA_SECURITY`                 | A dedicated schema for managing row access policies and security objects.         |
+| Snowflake | Warehouse      | `WH_S3_SQL_SEARCH_XS`               | An extra-small warehouse with a 60-second auto-suspend policy for cost efficiency.|
+| Snowflake | Role           | `ROLE_S3_SQL_SEARCH_APP_ADMIN`      | Full administrative access to all application components.                         |
+| Snowflake | Role           | `ROLE_S3_SQL_SEARCH_APP_DEVELOPER`  | Development access to create and manage application objects.                      |
+| Snowflake | Role           | `ROLE_S3_SQL_SEARCH_APP_VIEWER`     | Application role for demonstrating full access to streamit app, to view and download files. |
+| Snowflake | Role           | `ROLE_S3_SQL_SEARCH_APP_ROLE_1`     | Application role for demonstrating row access policy (restricted user 1).        |
+| Snowflake | Role           | `ROLE_S3_SQL_SEARCH_APP_ROLE_2`     | Application role for demonstrating row access policy (restricted user 2).        |
+| Snowflake | User           | `USER_S3_SQL_SEARCH_APP_ADMIN`      | A user mapped to the admin role for full system management.                       |
+| Snowflake | User           | `USER_S3_SQL_SEARCH_APP_DEVELOPER`  | A user mapped to the developer role for application development.                  |
+| Snowflake | User           | `USER_S3_SQL_SEARCH_APP_VIEWER`     | A user mapped to the viewer role for read-only data access.                       |
+| Snowflake | User           | `USER_S3_SQL_SEARCH_APP_USER_1`     | Application user 1 for demonstrating row-level security policies.                |
+| Snowflake | User           | `USER_S3_SQL_SEARCH_APP_USER_2`     | Application user 2 for demonstrating row-level security policies.                |
 
 
 ## 📝 Step-by-Step Setup
@@ -52,6 +56,8 @@ Before running the setup, you need to update the user passwords in the script.
 CREATE USER USER_S3_SQL_SEARCH_APP_ADMIN PASSWORD='YourStrongAdminPassword123!';
 CREATE USER USER_S3_SQL_SEARCH_APP_DEVELOPER PASSWORD='YourStrongDevPassword123!';
 CREATE USER USER_S3_SQL_SEARCH_APP_VIEWER PASSWORD='YourStrongViewerPassword123!';
+CREATE USER USER_S3_SQL_SEARCH_APP_USER_1 PASSWORD='YourStrongUser1Password123!';
+CREATE USER USER_S3_SQL_SEARCH_APP_USER_2 PASSWORD='YourStrongUser2Password123!';
 ```
 
 ### 2️⃣ 2. Execute the Setup Script
@@ -72,11 +78,13 @@ snowsql -a <snowflake_account> -u <your_username> -f scripts/sql/snowflake_base_
 3. Copy and paste the contents of `scripts/sql/snowflake_base_env_setup.sql`
 4. Execute the script section by section (recommended) or all at once
 
-### 3️⃣ 3. Verify the Setup
+### 3️⃣ 3. Testing and Verification
 
-After running the setup script, verify all components were created successfully:
+After running the setup script, verify all components were created successfully and test role access:
 
 ```sql
+USE SECONDARY ROLES NONE;
+
 -- Switch to the application admin role
 USE ROLE ROLE_S3_SQL_SEARCH_APP_ADMIN;
 
@@ -92,31 +100,14 @@ SHOW ROLES LIKE 'ROLE_S3_SQL_SEARCH_APP_%';
 -- Verify all users were created
 SHOW USERS LIKE 'USER_S3_SQL_SEARCH_APP_%';
 
--- Test warehouse functionality
+-- Test warehouse, database, and role functionality
 USE WAREHOUSE WH_S3_SQL_SEARCH_XS;
 USE DATABASE S3_SQL_SEARCH;
 SELECT CURRENT_WAREHOUSE(), CURRENT_DATABASE(), CURRENT_ROLE();
-```
-
-### 4️⃣ 4. Test Role Access
-
-Verify that each role has appropriate permissions:
-
-```sql
--- Test admin role access
-USE ROLE ROLE_S3_SQL_SEARCH_APP_ADMIN;
-USE WAREHOUSE WH_S3_SQL_SEARCH_XS;
-USE DATABASE S3_SQL_SEARCH;
 
 -- Test developer role access
 USE ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
-USE WAREHOUSE WH_S3_SQL_SEARCH_XS;
-USE DATABASE S3_SQL_SEARCH;
-
--- Test viewer role access
-USE ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER;
-USE WAREHOUSE WH_S3_SQL_SEARCH_XS;
-USE DATABASE S3_SQL_SEARCH;
+SELECT CURRENT_WAREHOUSE(), CURRENT_DATABASE(), CURRENT_ROLE();
 ```
 
 ## 📋 Script Details
@@ -128,88 +119,104 @@ The script automates the following setup tasks through 7 main sections:
   ```sql
   USE ROLE ACCOUNTADMIN;
   CREATE DATABASE S3_SQL_SEARCH;
-  CREATE WAREHOUSE WH_S3_SQL_SEARCH_XS WITH WAREHOUSE_SIZE='XSMALL' AUTO_SUSPEND=60 AUTO_RESUME=TRUE;
+  CREATE WAREHOUSE WH_S3_SQL_SEARCH_XS 
+  WITH 
+      WAREHOUSE_SIZE = 'XSMALL' 
+      AUTO_SUSPEND = 60 
+      AUTO_RESUME = TRUE;
   ```
 
-### 2️⃣ 2. Role Creation (Section 2)
-- **Create application-specific roles**: Establishes roles for administrators, developers, and viewers.
+### 2️⃣ 2. Role Hierarchy Setup (Section 2)
+- **Create application-specific roles**: Establishes roles for administrators, developers, viewers, and row access policy demonstration.
   ```sql
   CREATE ROLE ROLE_S3_SQL_SEARCH_APP_ADMIN;
   CREATE ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
   CREATE ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER;
+  CREATE ROLE ROLE_S3_SQL_SEARCH_APP_ROLE_1;  -- Row access policy demo role 1
+  CREATE ROLE ROLE_S3_SQL_SEARCH_APP_ROLE_2;  -- Row access policy demo role 2
   ```
 
-### 3️⃣ 3. User Creation (Section 3)
+### 3️⃣ 3. User Provisioning (Section 3)
 - **Create application users**: Sets up users for each role with strong password requirements.
   ```sql
   CREATE USER USER_S3_SQL_SEARCH_APP_ADMIN PASSWORD='*********' DEFAULT_ROLE=ROLE_S3_SQL_SEARCH_APP_ADMIN;
   CREATE USER USER_S3_SQL_SEARCH_APP_DEVELOPER PASSWORD='*********' DEFAULT_ROLE=ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
   CREATE USER USER_S3_SQL_SEARCH_APP_VIEWER PASSWORD='*********' DEFAULT_ROLE=ROLE_S3_SQL_SEARCH_APP_VIEWER;
+  CREATE USER USER_S3_SQL_SEARCH_APP_USER_1 PASSWORD='*********' DEFAULT_ROLE=ROLE_S3_SQL_SEARCH_APP_ROLE_1;
+  CREATE USER USER_S3_SQL_SEARCH_APP_USER_2 PASSWORD='*********' DEFAULT_ROLE=ROLE_S3_SQL_SEARCH_APP_ROLE_2;
   ```
 - **Assign roles to users**: Grants designated roles to users.
   ```sql
   GRANT ROLE ROLE_S3_SQL_SEARCH_APP_ADMIN TO USER USER_S3_SQL_SEARCH_APP_ADMIN;
   GRANT ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER TO USER USER_S3_SQL_SEARCH_APP_DEVELOPER;
   GRANT ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER TO USER USER_S3_SQL_SEARCH_APP_VIEWER;
+  GRANT ROLE ROLE_S3_SQL_SEARCH_APP_ROLE_1 TO USER USER_S3_SQL_SEARCH_APP_USER_1;
+  GRANT ROLE ROLE_S3_SQL_SEARCH_APP_ROLE_2 TO USER USER_S3_SQL_SEARCH_APP_USER_2;
   ```
 
-### 4️⃣ 4. Resource Ownership and Role Hierarchy (Section 4)
+### 4️⃣ 4. Ownership and Role Hierarchy (Section 4)
 - **Grant ownership to admin role**: Transfers ownership of the database and warehouse to the application admin role.
   ```sql
   GRANT OWNERSHIP ON DATABASE S3_SQL_SEARCH TO ROLE ROLE_S3_SQL_SEARCH_APP_ADMIN;
   GRANT OWNERSHIP ON WAREHOUSE WH_S3_SQL_SEARCH_XS TO ROLE ROLE_S3_SQL_SEARCH_APP_ADMIN;
   ```
-- **Establish role hierarchy**: Creates a clear inheritance structure for privileges.
+- **Establish role hierarchy**: Creates a clear inheritance structure for privileges (SYSADMIN → ADMIN → DEVELOPER | VIEWER, ROLE_1, ROLE_2).
   ```sql
   GRANT ROLE ROLE_S3_SQL_SEARCH_APP_ADMIN TO ROLE SYSADMIN;
   GRANT ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER TO ROLE ROLE_S3_SQL_SEARCH_APP_ADMIN;
-  GRANT ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
+  GRANT ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER TO ROLE ROLE_S3_SQL_SEARCH_APP_ADMIN;
+  GRANT ROLE ROLE_S3_SQL_SEARCH_APP_ROLE_1 TO ROLE ROLE_S3_SQL_SEARCH_APP_ADMIN;
+  GRANT ROLE ROLE_S3_SQL_SEARCH_APP_ROLE_2 TO ROLE ROLE_S3_SQL_SEARCH_APP_ADMIN;
   ```
 
-### 5️⃣ 5. Schema Creation and Access Controls (Section 5)
-- **Create application schema**: Uses ACCOUNTADMIN to create schema and grant ownership to admin role.
+### 5️⃣ 5. Schema and Access Control Setup (Section 5)
+- **Create application schemas**: Creates both APP_DATA (for application objects) and APP_DATA_SECURITY (for row access policies) schemas.
   ```sql
-  USE ROLE ACCOUNTADMIN;
-  USE DATABASE S3_SQL_SEARCH;
-  CREATE SCHEMA APP_DATA;
-  GRANT OWNERSHIP ON SCHEMA APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_ADMIN;
+  CREATE SCHEMA S3_SQL_SEARCH.APP_DATA;
+  GRANT OWNERSHIP ON SCHEMA S3_SQL_SEARCH.APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_ADMIN;
+  
+  CREATE SCHEMA S3_SQL_SEARCH.APP_DATA_SECURITY;
+  GRANT OWNERSHIP ON SCHEMA S3_SQL_SEARCH.APP_DATA_SECURITY TO ROLE ROLE_S3_SQL_SEARCH_APP_ADMIN;
   ```
-- **Grant database and schema usage**: Allows developer and viewer roles to access the database and schema.
+- **Grant database and schema usage**: Allows developer, viewer, and app roles to access the database and schema.
   ```sql
   GRANT USAGE ON DATABASE S3_SQL_SEARCH TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
-  GRANT USAGE ON SCHEMA APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
+  GRANT USAGE ON SCHEMA S3_SQL_SEARCH.APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
   GRANT USAGE ON DATABASE S3_SQL_SEARCH TO ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER;
-  GRANT USAGE ON SCHEMA APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER;
+  GRANT USAGE ON SCHEMA S3_SQL_SEARCH.APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER;
+  GRANT USAGE ON DATABASE S3_SQL_SEARCH TO ROLE ROLE_S3_SQL_SEARCH_APP_ROLE_1;
+  GRANT USAGE ON SCHEMA S3_SQL_SEARCH.APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_ROLE_1;
+  GRANT USAGE ON DATABASE S3_SQL_SEARCH TO ROLE ROLE_S3_SQL_SEARCH_APP_ROLE_2;
+  GRANT USAGE ON SCHEMA S3_SQL_SEARCH.APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_ROLE_2;
   ```
 - **Grant object creation privileges**: Allows the developer role to create necessary application objects.
   ```sql
-  GRANT CREATE TABLE ON SCHEMA APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
-  GRANT CREATE STAGE ON SCHEMA  APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
-  GRANT CREATE STREAM ON SCHEMA APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
-  GRANT CREATE STREAMLIT ON SCHEMA APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
-  GRANT CREATE TASK ON SCHEMA APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
-  GRANT OPERATE ON ALL TASKS IN SCHEMA APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
-  GRANT OPERATE ON FUTURE TASKS IN SCHEMA APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
+  GRANT CREATE TABLE ON SCHEMA S3_SQL_SEARCH.APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
+  GRANT CREATE STAGE ON SCHEMA S3_SQL_SEARCH.APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
+  GRANT CREATE STREAM ON SCHEMA S3_SQL_SEARCH.APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
+  GRANT CREATE STREAMLIT ON SCHEMA S3_SQL_SEARCH.APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
+  GRANT CREATE TASK ON SCHEMA S3_SQL_SEARCH.APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
   ```
 - **Grant account-level task execution**: Allows developer role to execute tasks which has ownership. *Without this privilege, task cannot be executed even if the developer owns the task.*
   ```sql
   GRANT EXECUTE TASK ON ACCOUNT TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
   ```
 
-### 6️⃣ 6. Warehouse Access Privileges (Section 6)
-- **Grant warehouse usage**: Allows developer and viewer roles to use the warehouse for running queries.
+### 6️⃣ 6. Compute Resource Access (Section 6)
+- **Grant warehouse usage**: Allows developer role to use the warehouse for development tasks.
   ```sql
   GRANT USAGE ON WAREHOUSE WH_S3_SQL_SEARCH_XS TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
-  GRANT USAGE ON WAREHOUSE WH_S3_SQL_SEARCH_XS TO ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER;
   ```
+  > **Note**: Streamlit apps use the warehouse specified in their configuration, so viewer and app roles don't need direct warehouse access.
 
-### 7️⃣ 7. Future Object Privileges (Section 7)
-- **Grant automatic privileges**: Ensures roles have appropriate access to objects created in the future.
+### 7️⃣ 7. Streamlit Context Function Privileges (Section 7)
+- **Grant READ SESSION privilege**: Enables Streamlit apps to use context functions like `CURRENT_USER()` and `CURRENT_AVAILABLE_ROLES()`, which are required for row access policies to work correctly in Streamlit apps.
   ```sql
-  -- Viewer role gets automatic SELECT access to future tables
-  GRANT SELECT ON ALL TABLES IN SCHEMA S3_SQL_SEARCH.APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER;
-  GRANT SELECT ON FUTURE TABLES IN SCHEMA S3_SQL_SEARCH.APP_DATA TO ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER;
+  GRANT READ SESSION ON ACCOUNT TO ROLE ROLE_S3_SQL_SEARCH_APP_DEVELOPER;
   ```
+  > **Important**: Without this privilege, context functions (`CURRENT_USER()`, `CURRENT_AVAILABLE_ROLES()`) will not work in Streamlit apps, and row access policies that depend on these functions will fail. This is required when using the optional row access policy setup in Step 4.
+  >
+  > **Reference**: [Snowflake Documentation - Context Functions and Row Access Policies in Streamlit](https://docs.snowflake.com/en/developer-guide/streamlit/additional-features#context-functions-and-row-access-policies-in-sis)
 
 ## 📁 Reference Files
 
@@ -236,5 +243,6 @@ For more information on Snowflake concepts used in this setup, refer to the offi
 - **[Users](https://docs.snowflake.com/en/sql-reference/sql/create-user)** - User creation and management
 - **[Schemas](https://docs.snowflake.com/en/sql-reference/sql/create-schema)** - Schema objects and organization
 - **[GRANT Privileges](https://docs.snowflake.com/en/sql-reference/sql/grant-privilege)** - Granting privileges to roles
-- **[EXECUTE TASK Privilege](https://docs.snowflake.com/en/sql-reference/sql/execute-task)** - Account-level privilege required to execute tasks, even if you own them
+- **[EXECUTE TASK Privilege](https://docs.snowflake.com/en/sql-reference/sql/execute-task#usage-notes)** - Account-level privilege required to execute tasks, even if you own them
+- **[READ SESSION Privilege for Streamlit](https://docs.snowflake.com/en/developer-guide/streamlit/additional-features#context-functions-and-row-access-policies-in-sis)** - Required privilege for using context functions in Streamlit apps
 ---

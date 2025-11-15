@@ -6,6 +6,8 @@
 [![Snowpark](https://img.shields.io/badge/Snowpark-1.39.1-blue.svg)](https://docs.snowflake.com/en/developer-guide/snowpark/python/index)
 [![AWS S3](https://img.shields.io/badge/AWS-S3-orange.svg)](https://aws.amazon.com/s3/)
 [![Snowflake](https://img.shields.io/badge/Snowflake-Cloud-blue.svg)](https://www.snowflake.com/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/nbyinfinity/s3-sql-search/graphs/commit-activity)
 [![GitHub stars](https://img.shields.io/github/stars/nbyinfinity/s3-sql-search?style=social)](https://github.com/nbyinfinity/s3-sql-search/stargazers)
 
 > Transform your AWS S3 storage into a lightning-fast, searchable data lake with SQL superpowers! 🚀
@@ -45,7 +47,7 @@ By leveraging Snowflake Directory Tables and event-driven processing, S3-SQL-Sea
 
 ### 🔒 **Security & Reliability**
 - **Role-Based Access Control (RBAC)**: Application access is managed through Snowflake roles, ensuring only authorized users can use the search interface
-- **File-Level Access Control**: Restrict which users can view or download specific files using row-level security policies *(Not implemented - can be added based on requirements)*
+- **File-Level Access Control**: Optional row-level security to restrict file access by user or role using configurable access policies
 - **Pre-Signed URLs**: Secure file downloads without exposing AWS credentials
 - **Audit Trail**: Complete logging of all file searches and user activities via Snowflake query history
 - **Enterprise-Grade**: Built on Snowflake and AWS for maximum reliability
@@ -92,11 +94,11 @@ The architecture consists of seven main components:
 
 ---
 
-> **Important Note on Naming Conventions**
+> **⚠️ Important Note on Naming Conventions**
 >
 > To ensure consistency and simplify the setup process, this solution uses predefined names for all AWS and Snowflake components (e.g., `ROLE_S3_SQL_SEARCH_APP_ADMIN`, `STORAGE_INT_S3_SQL_SEARCH`, etc.). These names are referenced throughout the documentation and scripts.
 >
-> **S3 Bucket Name**: Replace `your-s3-bucket-name` with your actual S3 bucket name throughout all setup commands and configuration files.
+> **⚠️ S3 Bucket Name**: Throughout all setup files, configuration templates, and SQL scripts, replace `your-s3-bucket-name` with your actual S3 bucket name (e.g., `my-company-data-lake`).
 >
 > You have the flexibility to use your own names for other components. However, if you choose to do so, you must **carefully replace the default names in every relevant file, script, and command**. For a smoother initial setup, we recommend using the default names provided.
 
@@ -104,30 +106,35 @@ Below is a reference table of the default names used throughout this solution's 
 
 ### 📋 Component Naming Reference
 
-| Platform        | Component Type        | Default Name                         |
-| :--------       | :-------------------- | :----------------------------------- |
-| **AWS**         |                       |                                      |
-| AWS             | S3 Bucket             | `your-s3-bucket-name`                |
-| AWS             | IAM Role              | `IAM_ROLE_S3_SQL_SEARCH_APP`         |
-| AWS             | IAM Policy            | `IAM_POLICY_S3_SQL_SEARCH_APP`       |
-| AWS             | S3 Event Notification | `EVENT_NOTIFICATION_S3_SQL_SEARCH_APP` |
-| **Snowflake**   |                       |                                      |
-| Snowflake       | Database              | `S3_SQL_SEARCH`                      |
-| Snowflake       | Schema                | `APP_DATA`                           |
-| Snowflake       | Warehouse             | `WH_S3_SQL_SEARCH_XS`                |
-| Snowflake       | Admin Role            | `ROLE_S3_SQL_SEARCH_APP_ADMIN`       |
-| Snowflake       | Developer Role        | `ROLE_S3_SQL_SEARCH_APP_DEVELOPER`   |
-| Snowflake       | Viewer Role           | `ROLE_S3_SQL_SEARCH_APP_VIEWER`      |
-| Snowflake       | Admin User            | `USER_S3_SQL_SEARCH_APP_ADMIN`       |
-| Snowflake       | Developer User        | `USER_S3_SQL_SEARCH_APP_DEVELOPER`   |
-| Snowflake       | Viewer User           | `USER_S3_SQL_SEARCH_APP_VIEWER`      |
-| Snowflake       | Storage Integration   | `STORAGE_INT_S3_SQL_SEARCH`          |
-| Snowflake       | External Stage        | `EXT_STAGE_S3_SQL_SEARCH`            |
-| Snowflake       | Stream                | `STREAM_S3_SQL_SEARCH`               |
-| Snowflake       | Task                  | `TASK_S3_SQL_SEARCH`                 |
-| Snowflake       | Table                 | `FILE_METADATA`                      |
-| Snowflake       | Named Stage           | `STAGE_S3_SQL_SEARCH_APP_CODE`       |
-| Snowflake       | Streamlit App         | `S3_SQL_SEARCH_APP`                  |
+| Platform        | Component Type        | Default Name                           | Purpose                                                    |
+| :-------------- | :-------------------- | :------------------------------------- | :--------------------------------------------------------- |
+| **AWS**         |                       |                                        |                                                            |
+| AWS             | S3 Bucket             | `your-s3-bucket-name`                  | Storage location for files to be indexed and searched      |
+| AWS             | IAM Role              | `IAM_ROLE_S3_SQL_SEARCH_APP`           | Allows Snowflake to access S3 bucket securely              |
+| AWS             | IAM Policy            | `IAM_POLICY_S3_SQL_SEARCH_APP`         | Defines S3 permissions for the IAM role                    |
+| AWS             | S3 Event Notification | `EVENT_NOTIFICATION_S3_SQL_SEARCH_APP` | Triggers metadata updates when files change in S3          |
+| **Snowflake**   |                       |                                        |                                                            |
+| Snowflake       | Database              | `S3_SQL_SEARCH`                        | Main database containing all application objects           |
+| Snowflake       | Schema                | `APP_DATA`                             | Schema for tables, stages, streams, tasks, and Streamlit app |
+| Snowflake       | Schema                | `APP_DATA_SECURITY`                    | Schema for row access policies and security configurations |
+| Snowflake       | Warehouse             | `WH_S3_SQL_SEARCH_XS`                  | Compute resource for query execution (XS size, auto-suspend) |
+| Snowflake       | Admin Role            | `ROLE_S3_SQL_SEARCH_APP_ADMIN`         | Full administrative access to all application components   |
+| Snowflake       | Developer Role        | `ROLE_S3_SQL_SEARCH_APP_DEVELOPER`     | Create and manage application objects                      |
+| Snowflake       | Viewer Role           | `ROLE_S3_SQL_SEARCH_APP_VIEWER`        | Read-only access for querying data via Streamlit app       |
+| Snowflake       | App Role 1            | `ROLE_S3_SQL_SEARCH_APP_ROLE_1`        | Demonstrates row-level security with restricted user access pattern |
+| Snowflake       | App Role 2            | `ROLE_S3_SQL_SEARCH_APP_ROLE_2`        | Demonstrates row-level security with restricted role access pattern |
+| Snowflake       | Admin User            | `USER_S3_SQL_SEARCH_APP_ADMIN`         | User assigned to admin role for system management          |
+| Snowflake       | Developer User        | `USER_S3_SQL_SEARCH_APP_DEVELOPER`     | User assigned to developer role for app development        |
+| Snowflake       | Viewer User           | `USER_S3_SQL_SEARCH_APP_VIEWER`        | User assigned to viewer role for read-only app access      |
+| Snowflake       | App User 1            | `USER_S3_SQL_SEARCH_APP_USER_1`        | User for demonstrating row-level security user scenario       |
+| Snowflake       | App User 2            | `USER_S3_SQL_SEARCH_APP_USER_2`        | User for demonstrating row-level security role scenario       |
+| Snowflake       | Storage Integration   | `STORAGE_INT_S3_SQL_SEARCH`            | Connects Snowflake to S3 with delegated authentication     |
+| Snowflake       | External Stage        | `EXT_STAGE_S3_SQL_SEARCH`              | External stage with directory table for S3 file tracking   |
+| Snowflake       | Stream                | `STREAM_S3_SQL_SEARCH`                 | Captures change data from directory table for processing   |
+| Snowflake       | Task                  | `TASK_S3_SQL_SEARCH`                   | Automated task to merge file metadata changes              |
+| Snowflake       | Table                 | `FILE_METADATA`                        | Final table storing searchable S3 file metadata            |
+| Snowflake       | Named Stage           | `STAGE_S3_SQL_SEARCH_APP_CODE`         | Internal stage for Streamlit application code files        |
+| Snowflake       | Streamlit App         | `S3_SQL_SEARCH_APP`                    | Web interface for searching and downloading S3 files       |
 
 ---
 
@@ -173,7 +180,15 @@ Build an event-driven pipeline using directory tables, streams, and tasks to aut
 
 >Follow **Setup Guide** to setup Snowflake Metadata Pipeline
 
-### 4️⃣ Step 4: Streamlit Application Deployment
+### 4️⃣ Step 4: Row Access Policies Setup (Optional)
+
+**📖 [Setup Guide: docs/README-snowflake-row-access-policies-setup.md](docs/README-snowflake-row-access-policies-setup.md)**
+
+Configure row-level security using Snowflake's Row Access Policies to control which users can access specific files based on configurable access rules. This enables multi-tenant scenarios where different users see only authorized files.
+
+> Follow **Setup Guide** to configure row-level security (skip this step if you don't need file-level access control)
+
+### 5️⃣ Step 5: Streamlit Application Deployment
 
 **📖 [Setup Guide: docs/README-streamlit-setup.md](docs/README-streamlit-setup.md)**  
 **👥 [User Guide: docs/README-streamlit-user-guide.md](docs/README-streamlit-user-guide.md)**

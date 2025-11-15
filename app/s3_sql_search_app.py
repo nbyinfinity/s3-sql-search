@@ -70,14 +70,14 @@ with form:
         if file_pattern:
             if use_regex:
                 if case_insensitive:
-                    where_clause.append(f"REGEXP_LIKE(LOWER(file_name), LOWER('{file_pattern}'))")
+                    where_clause.append(f"REGEXP_LIKE(LOWER(relative_file_path), LOWER('{file_pattern}'))")
                 else:
-                    where_clause.append(f"REGEXP_LIKE(file_name, '{file_pattern}')")
+                    where_clause.append(f"REGEXP_LIKE(relative_file_path, '{file_pattern}')")
             else:
                 if case_insensitive:
-                    where_clause.append(f"LOWER(file_name) LIKE LOWER('%{file_pattern}%')")
+                    where_clause.append(f"LOWER(relative_file_path) LIKE LOWER('%{file_pattern}%')")
                 else:
-                    where_clause.append(f"file_name LIKE '%{file_pattern}%'")
+                    where_clause.append(f"relative_file_path LIKE '%{file_pattern}%'")
     # -- Date Range Section --#
     with st.expander("📅 Date Range", expanded=True):
         use_date_filter = st.toggle("Enable Date Range Filter", value=False, help="Filter files by file timestamp date range")
@@ -282,4 +282,4 @@ else:
         )
 
 st.markdown("---")
-st.markdown("Built with :heart: using Snowflake :snowflake: and Streamlit")
+st.markdown("Built with :heart: using Snowflake :snowflake: and Streamlit :streamlit:")

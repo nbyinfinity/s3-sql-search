@@ -16,6 +16,7 @@ Before setting up the Streamlit application, ensure you have completed:
 - ✅ **Step 1**: [Snowflake Base Environment Setup](README-snowflake-base-env-setup.md)
 - ✅ **Step 2**: [AWS Storage Integration Setup](README-snowflake-aws-storage-integration-setup.md)
 - ✅ **Step 3**: [Metadata Pipeline Setup](README-snowflake-metadata-pipeline-setup.md)
+- ⭐ **Step 4 (Optional)**: [Row Access Policies Setup](README-snowflake-row-access-policies-setup.md) - Configure row-level security if needed
 
 ### 🔑 Required Access
 - A Snowflake role with privileges to create stage and streamlit privileges. The `ROLE_S3_SQL_SEARCH_APP_DEVELOPER` created in the base setup has the necessary permissions.
@@ -100,6 +101,8 @@ COMMENT = 'S3 SQL Search App'
 
 -- Grant access to the application
 GRANT USAGE ON STREAMLIT S3_SQL_SEARCH_APP TO ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER;
+GRANT USAGE ON STREAMLIT S3_SQL_SEARCH_APP TO ROLE ROLE_S3_SQL_SEARCH_APP_ROLE_1;
+GRANT USAGE ON STREAMLIT S3_SQL_SEARCH_APP TO ROLE ROLE_S3_SQL_SEARCH_APP_ROLE_2;
 ```
 
 ### 5️⃣ 5. Verify and Access the Streamlit Application
