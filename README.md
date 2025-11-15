@@ -1,5 +1,4 @@
-# <img src="docs/images/s3-sql-search-logo.jpg" alt="S3 SQL Search" width="60" style="vertical-align: middle;" /> S3-SQL-Search: Lightning-Fast, Regex-Powered File Search for AWS S3
-
+# <img src="docs/images/s3-sql-search-logo.jpg" alt="S3 SQL Search" width="60" style="vertical-align: middle;" /> S3-SQL-Search: Serverless File Search Engine for AWS S3 with Snowflake and Streamlit
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.48.0-red.svg)](https://streamlit.io/)
@@ -133,6 +132,8 @@ Below is a reference table of the default names used throughout this solution's 
 | Snowflake       | Stream                | `STREAM_S3_SQL_SEARCH`                 | Captures change data from directory table for processing   |
 | Snowflake       | Task                  | `TASK_S3_SQL_SEARCH`                   | Automated task to merge file metadata changes              |
 | Snowflake       | Table                 | `FILE_METADATA`                        | Final table storing searchable S3 file metadata            |
+| Snowflake       | Row Access Policy     | `ROW_ACCESS_POLICY_S3_SQL_SEARCH_APP`  | Controls file-level access based on user/role rules (optional) |
+| Snowflake       | Mapping Table         | `ROW_ACCESS_POLICY_MAPPING_S3_SQL_SEARCH_APP` | Stores dynamic access rules for mapping table approach (optional) |
 | Snowflake       | Named Stage           | `STAGE_S3_SQL_SEARCH_APP_CODE`         | Internal stage for Streamlit application code files        |
 | Snowflake       | Streamlit App         | `S3_SQL_SEARCH_APP`                    | Web interface for searching and downloading S3 files       |
 
@@ -184,7 +185,7 @@ Build an event-driven pipeline using directory tables, streams, and tasks to aut
 
 **📖 [Setup Guide: docs/README-snowflake-row-access-policies-setup.md](docs/README-snowflake-row-access-policies-setup.md)**
 
-Configure row-level security using Snowflake's Row Access Policies to control which users can access specific files based on configurable access rules. This enables multi-tenant scenarios where different users see only authorized files.
+Configure row-level security using Snowflake's Row Access Policies to control which users can access specific files. Choose from two approaches: **Inline CASE** for simple, static rules or **Mapping Table** for flexible, dynamic rules. Enables multi-tenant scenarios where different users see only authorized files.
 
 > Follow **Setup Guide** to configure row-level security (skip this step if you don't need file-level access control)
 
@@ -233,17 +234,8 @@ For major changes, please open an issue first to discuss what you would like to 
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-### MIT License Summary
-
-- ✅ **Commercial use** - You can use this project commercially
-- ✅ **Modification** - You can modify the source code
-- ✅ **Distribution** - You can distribute this project
-- ✅ **Private use** - You can use this project privately
-- ❌ **Liability** - The authors are not liable for any damages
-- ❌ **Warranty** - This project comes with no warranty
-
 ---
 
-**Powered by Snowflake ❄️ • AWS S3 ☁️ • Streamlit 🚀 | Built with ❤️ for the data community**
+**Powered by Snowflake ❄️ • AWS S3 ☁️ • Streamlit 🚀**
 
 ---
