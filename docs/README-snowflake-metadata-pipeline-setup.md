@@ -58,14 +58,15 @@ CREATE OR REPLACE STAGE EXT_STAGE_S3_SQL_SEARCH
   STORAGE_INTEGRATION = STORAGE_INT_S3_SQL_SEARCH
   URL = 's3://your-s3-bucket-name/';
 
-GRANT USAGE ON STAGE EXT_STAGE_S3_SQL_SEARCH TO ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER;
+-- Dont need
+-- GRANT USAGE ON STAGE EXT_STAGE_S3_SQL_SEARCH TO ROLE ROLE_S3_SQL_SEARCH_APP_VIEWER;
 
 -- Test stage functionality and directory table
 LIST @EXT_STAGE_S3_SQL_SEARCH;
 
 -- Query Directory Table
 SELECT * FROM DIRECTORY(@EXT_STAGE_S3_SQL_SEARCH);
--- This should return list of files in the bucket
+-- This should return list of files in the bucket (if bucket is not empty)
 
 -- Get SQS ARN (Snowflake managed)
 DESCRIBE STAGE EXT_STAGE_S3_SQL_SEARCH;
@@ -216,7 +217,7 @@ This guide uses inline JSON for AWS CLI commands for simplicity. However, for ea
 
 - **Event Notification Policy**: `config/event_notification.json`
 
-You can use these files with the `file://` prefix in your AWS CLI commands. For example: `aws iam put-role-policy --policy-document file://config/iam_role_policy.json`. Remember to replace the placeholder values in the files before using them.
+You can use these files with the `file://` prefix in your AWS CLI commands. For example: `aws s3api put-bucket-notification-configuration --bucket your-bucket-name --notification-configuration file://config/event_notification.json`. Remember to replace the placeholder values in the files before using them.
 
 ## 📁 Reference Files
 
@@ -229,6 +230,10 @@ This setup guide references the following files from the repository:
 ## 📌 Next Steps
 
 After completing the metadata pipeline setup, proceed to:
+
+**Row Access Policies Setup (Optional)**: Follow [README-snowflake-row-access-policies-setup.md](README-snowflake-row-access-policies-setup.md) to configure row-level security and control which users can access specific files based on configurable access rules.
+
+**OR**
 
 **Streamlit Application Deployment**: Follow [README-streamlit-setup.md](README-streamlit-setup.md) to deploy the web interface and enable users to search and download S3 files through an intuitive UI.
 
