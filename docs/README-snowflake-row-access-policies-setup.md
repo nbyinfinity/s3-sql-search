@@ -3,15 +3,15 @@
 This guide covers setting up row-level security for the S3 SQL Search application using Snowflake's Row Access Policies. This enables different users to see only the files they're authorized to access based on configurable access rules.
 
 ## 📋 Table of Contents
-- [✅ Prerequisites](#✅-prerequisites)
-- [📦 Components Created by This Setup](#📦-components-created-by-this-setup)
-- [🎯 How Row Access Policies Work](#🎯-how-row-access-policies-work)
-- [🔀 Implementation Approaches](#🔀-implementation-approaches)
-- [📝 Step-by-Step Setup](#📝-step-by-step-setup)
-- [✅ Verification and Testing](#✅-verification-and-testing)
-- [⚡ Performance Optimization for Large Datasets](#⚡-performance-optimization-for-large-datasets)
-- [⏭️ Next Steps](#⏭️-next-steps)
-- [📚 Additional Resources](#📚-additional-resources)
+- [✅ Prerequisites](#-prerequisites)
+- [📦 Components Created by This Setup](#-components-created-by-this-setup)
+- [🎯 How Row Access Policies Work](#-how-row-access-policies-work)
+- [🔀 Implementation Approaches](#-implementation-approaches)
+- [📝 Step-by-Step Setup](#-step-by-step-setup)
+- [✅ Verification and Testing](#-verification-and-testing)
+- [⚡ Performance Optimization for Large Datasets](#-performance-optimization-for-large-datasets)
+- [⏭️ Next Steps](#-next-steps)
+- [📚 Additional Resources](#-additional-resources)
 
 ## ✅ Prerequisites
 
